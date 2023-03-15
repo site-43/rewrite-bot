@@ -10,7 +10,6 @@ class Help(interactions.Extension):
             title="Aide",
             color=0xFF0000,
             footer_text="Contacte @Saturna19#1510 pour avoir plus de renseignements si nécessaire !",
-            include_thumbnail=True
         )
         for command in self.client._commands:
             if command.type == interactions.ApplicationCommandType.CHAT_INPUT:
