@@ -93,6 +93,15 @@ class absenceManager(interactions.Extension):
     def __init__(self, client):
 
         self.client: interactions.Client = client
+    async def check(values:dict = None):
+        if values == None:
+            return
+        try:
+            departdate = round(datetime.datetime.strptime(values[0], "%d/%m/%Y").timestamp())
+            retourdate = round(datetime.datetime.strptime(values[1], "%d/%m/%Y").timestamp())
+            return [departdate, retourdate]
+        except:
+            return False
 
     @interactions.extension_component("abs_request_sender")
     async def btnabs(self, ctx: interactions.CommandContext):
@@ -125,20 +134,10 @@ class absenceManager(interactions.Extension):
     @interactions.extension_modal('abs_requests')
     async def absmodalcb(self, ctx: interactions.CommandContext, abs_requests_reason: str, abs_requests_depart_date: str, abs_requests_retour_date: str):
             print('Received.')
-            try:
-                departdate = str(datetime.datetime.strptime(abs_requests_depart_date, "%d/%m/%Y").timestamp()).split(".")[0]
-                retourdate = str(datetime.datetime.strptime(abs_requests_retour_date, "%d/%m/%Y").timestamp()).split(".")[0]
-            except ValueError:
-                departdate = abs_requests_depart_date
-                retourdate = abs_requests_retour_date
-
-            if not abs_requests_depart_date.find("/"):
-                await ctx.send("Veuillez entrer correctement la(les) valeur.", ephemeral=True)
-                return False
-
-            if not abs_requests_retour_date.find("/"):
-                await ctx.send("Veuillez entrer correctement la(les) valeur.", ephemeral=True)
-                return False
+            dates = await absenceManager.check([abs_requests_depart_date, abs_requests_retour_date])
+            if not dates:
+                await ctx.send("Erreur, veuillez communiquer des dates valides en suivant le format `DD/MM/YYYY`.\nExemple: `01/02/2023`", ephemeral=True)
+                return
 
 
             embed = interactions.Embed(
@@ -151,14 +150,14 @@ class absenceManager(interactions.Extension):
 
                     name="Date de départ fournie:",
 
-                    value=f"<t:{departdate}:D>"
+                    value=f"<t:{dates[0]}:D>"
 
                 ),
                 interactions.EmbedField(
 
                     name="Date de retour fournie:",
 
-                    value=f"<t:{retourdate}:D> (<t:{retourdate}:R>)"
+                    value=f"<t:{dates[1]}:D> (<t:{dates[1]}:R>)"
 
                 ),
                 interactions.EmbedField(
@@ -181,20 +180,10 @@ class absenceManager(interactions.Extension):
     @interactions.extension_modal('pr_modal')
     async def prmodalcb(self, ctx: interactions.CommandContext, pr_modal_reason: str, pr_modal_depart: str, pr_modal_retour: str):
             print('Received.')
-            if not pr_modal_depart.find("/"):
-                await ctx.send("Veuillez entrer correctement la valeur.", ephemeral=True)
-                return False
-
-            if not pr_modal_retour.find("/"):
-                await ctx.send("Veuillez entrer correctement la valeur.", ephemeral=True)
-                return False
-                
-            try:
-                departdate = str(datetime.datetime.strptime(pr_modal_depart, "%d/%m/%Y").timestamp()).split(".")[0]
-                retourdate = str(datetime.datetime.strptime(pr_modal_retour, "%d/%m/%Y").timestamp()).split(".")[0]
-            except ValueError:
-                departdate = pr_modal_depart
-                retourdate = pr_modal_retour
+            dates = await absenceManager.check([pr_modal_depart, pr_modal_retour])
+            if not dates:
+                await ctx.send("Erreur, veuillez communiquer des dates valides en suivant le format `DD/MM/YYYY`.\nExemple: `01/02/2023`", ephemeral=True)
+                return
 
             embed = interactions.Embed(
 
@@ -206,14 +195,14 @@ class absenceManager(interactions.Extension):
 
                     name="Date de départ fournie:",
 
-                    value=f"<t:{departdate}:D>"
+                    value=f"<t:{dates[0]}:D>"
 
                 ),
                 interactions.EmbedField(
 
                     name="Date de retour fournie:",
 
-                    value=f"<t:{retourdate}:D> (<t:{retourdate}:R>)"
+                    value=f"<t:{dates[1]}:D> (<t:{dates[1]}:R>)"
 
                 ),
                 interactions.EmbedField(

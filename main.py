@@ -9,6 +9,9 @@ import logging
 import time
 import os
 from configs import VERSION, OWNER_ID
+from dotenv import load_dotenv
+
+load_dotenv()
 EXTENSIONS = [file.replace(".py", "") for file in os.listdir("exts") if file.endswith(".py")]
 
 # client = interactions.Client(token="") -> Bot Canarypy 
