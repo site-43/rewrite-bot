@@ -1,42 +1,10 @@
 import interactions
-
+from replit import db
 from configs import OWNER_ID, ABSENCECHANNEL
+from utils.embeds import new_embed, create_error_embed
+from utils.components import add_button
 import datetime
 import asyncio
-
-#Item3 = ValidateABS
-#Item4 = RefuseABS
-#Item5 = ValidatePR
-#Item6 = RefusePR
-
-item3 = interactions.Button(
-    style = interactions.ButtonStyle.PRIMARY,
-    label = "Accepter",
-    emoji = interactions.Emoji(name="✅"),
-    custom_id = "accept1"
-)
-
-item4 = interactions.Button(
-    style = interactions.ButtonStyle.PRIMARY,
-    label = "Refuser",
-    emoji = interactions.Emoji(name="❌"),
-    custom_id = "refuse1"
-)
-
-item5 = interactions.Button(
-    style = interactions.ButtonStyle.PRIMARY,
-    label = "Accepter",
-    emoji = interactions.Emoji(name="✅"),
-    custom_id = "accept2"
-)
-
-item6 = interactions.Button(
-    style = interactions.ButtonStyle.PRIMARY,
-    label = "Refuser",
-    emoji = interactions.Emoji(name="❌"),
-    custom_id = "refuse2"
-)
-
 
 absmodal = interactions.Modal(
             title="Absence",
