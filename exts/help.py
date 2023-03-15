@@ -8,7 +8,6 @@ class Help(interactions.Extension):
     async def help(self, ctx: interactions.CommandContext):
         embed = new_embed(
             title="Aide",
-            color=0xFF0000,
             footer_text="Contacte @Saturna19#1510 pour avoir plus de renseignements si nécessaire !",
         )
         for command in self.client._commands:
