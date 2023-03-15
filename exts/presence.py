@@ -5,7 +5,14 @@ from utils.embeds import new_embed, create_error_embed
 from utils.components import add_button
 import datetime
 import asyncio
-
+buttonsABS = [
+    add_button(type=interactions.ButtonStyle.SUCCESS, label="Accepter", emoji=interactions.Emoji(name="✅"), custom_id="accept1"),
+    add_button(type=interactions.ButtonStyle.DANGER, label="Refuser", emoji=interactions.Emoji(name="❌"), custom_id="refuse1")
+]
+buttonsPR = [
+    add_button(type=interactions.ButtonStyle.SUCCESS, label="Accepter", emoji=interactions.Emoji(name="✅"), custom_id="accept2"),
+    add_button(type=interactions.ButtonStyle.DANGER, label="Refuser", emoji=interactions.Emoji(name="❌"), custom_id="refuse2")
+]
 absmodal = interactions.Modal(
             title="Absence",
             custom_id="abs_requests",
@@ -165,7 +172,7 @@ class absenceManager(interactions.Extension):
 
             await ctx.send("Votre absence a bien été reçue. Votre gérant vous recontactera d'ici peu pour donner suite ou non à votre présence réduite.", ephemeral=True) #Message pour le staff qui fait l'annonce.
             channel = await interactions.get(self.client, interactions.Channel, object_id=ABSENCECHANNEL)
-            await channel.send(content=f"{ctx.member.user.id} - <@!795745320629567489>", embeds=embed, components=[item3, item4])
+            await channel.send(content=f"{ctx.member.user.id} - <@!795745320629567489>", embeds=embed, components=buttonsABS)
 
 
 ########################################################################
@@ -188,9 +195,6 @@ class absenceManager(interactions.Extension):
             except ValueError:
                 departdate = pr_modal_depart
                 retourdate = pr_modal_retour
-
-
-
 
             embed = interactions.Embed(
 
@@ -224,7 +228,7 @@ class absenceManager(interactions.Extension):
             await ctx.send("Votre absence a bien été reçue. Votre gérant vous recontactera d'ici peu pour donner suite ou non à votre présence réduite.", ephemeral=True) #Message pour le staff qui fait l'annonce.
             channel = await interactions.get(self.client, interactions.Channel, object_id=ABSENCECHANNEL)
             print(ctx.member.user.id)
-            await channel.send(content=f"{ctx.member.user.id} - <@!795745320629567489>", embeds=embed, components=[item5, item6])
+            await channel.send(content=f"{ctx.member.user.id} - <@!795745320629567489>", embeds=embed, components=buttonsPR)
 
 
 def setup(client):

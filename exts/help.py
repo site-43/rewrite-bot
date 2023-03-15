@@ -13,7 +13,7 @@ class Help(interactions.Extension):
         )
         for command in self.client._commands:
             if command.type == interactions.ApplicationCommandType.CHAT_INPUT:
-                embed.add_field(name=f"</{command.name}:0>", value=command.description)
+                embed.add_field(name=f"{command.name}", value=command.description)
 
         await ctx.send(embeds=[embed], ephemeral=True)
 
