@@ -1,3 +1,4 @@
+import interactions
 absmodal = interactions.Modal(
             title="Absence",
             custom_id="abs_requests",

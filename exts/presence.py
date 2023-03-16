@@ -68,34 +68,7 @@ class absenceManager(interactions.Extension):
                 return
 
 
-            embed = interactions.Embed(
-
-                title=f"Absence de: de {ctx.author.id}",
-
-                description=f"**Une nouvelle absence a été signalée par {ctx.author.mention}**",
-
-                fields=[interactions.EmbedField(
-
-                    name="Date de départ fournie:",
-
-                    value=f"<t:{dates[0]}:D>"
-
-                ),
-                interactions.EmbedField(
-
-                    name="Date de retour fournie:",
-
-                    value=f"<t:{dates[1]}:D> (<t:{dates[1]}:R>)"
-
-                ),
-                interactions.EmbedField(
-
-                    name="Raison fournie:",
-
-                    value=abs_requests_reason
-
-                ),
-                ])
+            embed = new_embed(title=f"Absence de {ctx.author.id}", description=f"**Une nouvelle absence a été signalée par {ctx.author.mention}**", fields=[["a", "b", False], ["a", "c", False]])
 
             await ctx.send("Votre absence a bien été reçue. Votre gérant vous recontactera d'ici peu pour donner suite ou non à votre présence réduite.", ephemeral=True) #Message pour le staff qui fait l'annonce.
             channel = await interactions.get(self.client, interactions.Channel, object_id=ABSENCECHANNEL)
@@ -113,34 +86,18 @@ class absenceManager(interactions.Extension):
                 await ctx.send("Erreur, veuillez communiquer des dates valides en suivant le format `DD/MM/YYYY`.\nExemple: `01/02/2023`", ephemeral=True)
                 return
 
-            embed = interactions.Embed(
+            embed = new_embed(
 
                 title=f"Présence réduite de {ctx.author.id}",
 
                 description=f"**Une nouvelle présence réduite a été signalée par {ctx.author.mention}**",
 
-                fields=[interactions.EmbedField(
-
-                    name="Date de départ fournie:",
-
-                    value=f"<t:{dates[0]}:D>"
-
-                ),
-                interactions.EmbedField(
-
-                    name="Date de retour fournie:",
-
-                    value=f"<t:{dates[1]}:D> (<t:{dates[1]}:R>)"
-
-                ),
-                interactions.EmbedField(
-
-                    name="Raison fournie:",
-
-                    value=pr_modal_reason
-
-                ),
-                ])
+                fields=[
+                    ["Date de départ fournie:", f"<t:{dates[0]}:D>", False],
+                    ["Date de retour fournie:", f"<t:{dates[0]}:D>", False],
+                    ["Raison fournie:", pr_modal_reason, False],
+                ]
+            )
 
             await ctx.send("Votre absence a bien été reçue. Votre gérant vous recontactera d'ici peu pour donner suite ou non à votre présence réduite.", ephemeral=True) #Message pour le staff qui fait l'annonce.
             channel = await interactions.get(self.client, interactions.Channel, object_id=ABSENCECHANNEL)
