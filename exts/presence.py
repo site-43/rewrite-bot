@@ -3,6 +3,7 @@ from replit import db
 from configs import OWNER_ID, ABSENCECHANNEL
 from utils.embeds import new_embed, create_error_embed
 from utils.components import add_button
+from utils.modals import absmodal, prmodal
 import datetime
 import asyncio
 buttonsABS = [
@@ -13,80 +14,7 @@ buttonsPR = [
     add_button(type=interactions.ButtonStyle.SUCCESS, label="Accepter", emoji=interactions.Emoji(name="✅"), custom_id="accept2"),
     add_button(type=interactions.ButtonStyle.DANGER, label="Refuser", emoji=interactions.Emoji(name="❌"), custom_id="refuse2")
 ]
-absmodal = interactions.Modal(
-            title="Absence",
-            custom_id="abs_requests",
-            components=[
-                interactions.TextInput(
-                    style=interactions.TextStyleType.PARAGRAPH,
-                    label="Raison d'absence",
-                    custom_id="abs_requests_reason",
-                    placeholder="Veuillez entrer la raison ici.",
-                    required=True,
-                ),
 
-                interactions.TextInput(
-                    style=interactions.TextStyleType.SHORT,
-                    label="Veuillez entrer la date de votre départ.",
-                    custom_id="abs_requests_depart_date",
-                    placeholder="Sous le format DD/MM/YYYY",
-                    min_length=10,
-                    max_length=10,
-                    required=True,
-                ),
-
-                interactions.TextInput(
-                    style=interactions.TextStyleType.SHORT,
-                    label="Veuillez entrer la date de votre retour.",
-                    custom_id="abs_requests_retour_date",
-                    placeholder="Sous le format DD/MM/YYYY",
-                    min_length=10,
-                    max_length=10,
-                    required=True,
-                ),
-            ],
-        )
-
-
-prmodal = interactions.Modal(
-
-            title="Presence Réduite",
-
-            custom_id="pr_modal",
-
-            components=[
-                interactions.TextInput(
-                    style=interactions.TextStyleType.PARAGRAPH,
-                    label="Raison de présence réduite.",
-                    custom_id="pr_modal_reason",
-                    placeholder="Veuillez entrer la raison ici.",
-                    required=True,
-                ),
-
-                interactions.TextInput(
-                    style=interactions.TextStyleType.SHORT,
-                    label="Veuillez entrer la date de votre départ.",
-                    custom_id="pr_modal_depart",
-                    placeholder="Sous le format DD/MM/YYYY",
-                    min_length=10,
-                    max_length=10,
-                    required=True,
-                ),
-
-                interactions.TextInput(
-                    style=interactions.TextStyleType.SHORT,
-                    label="Veuillez entrer la date de votre retour.",
-                    custom_id="pr_modal_retour",
-                    placeholder="Sous le format DD/MM/YYYY",
-                    min_length=10,
-                    max_length=10,
-                    required=True,
-
-                ),
-
-            ],
-
-        )
 
 class absenceManager(interactions.Extension):
 
