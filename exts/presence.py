@@ -1,5 +1,5 @@
 import interactions
-from replit import db
+#from replit import db
 from configs import OWNER_ID, ABSENCECHANNEL
 from utils.embeds import new_embed, create_error_embed
 from utils.components import add_button
@@ -14,14 +14,17 @@ buttonsPR = [
     add_button(type=interactions.ButtonStyle.SUCCESS, label="Accepter", emoji=interactions.Emoji(name="✅"), custom_id="accept2"),
     add_button(type=interactions.ButtonStyle.DANGER, label="Refuser", emoji=interactions.Emoji(name="❌"), custom_id="refuse2")
 ]
-
+db = {}
+db["test"] = {}
 
 class absenceManager(interactions.Extension):
+    
 
     def __init__(self, client):
 
         self.client: interactions.Client = client
     async def check(values:dict = None):
+        
         if values == None:
             return
         try:
@@ -69,9 +72,8 @@ class absenceManager(interactions.Extension):
 
 
             embed = new_embed(title=f"Absence de {ctx.author.id}", description=f"**Une nouvelle absence a été signalée par {ctx.author.mention}**", fields=[["a", "b", False], ["a", "c", False]])
-
-            await ctx.send("Votre absence a bien été reçue. Votre gérant vous recontactera d'ici peu pour donner suite ou non à votre présence réduite.", ephemeral=True) #Message pour le staff qui fait l'annonce.
             channel = await interactions.get(self.client, interactions.Channel, object_id=ABSENCECHANNEL)
+            await ctx.send("Votre absence a bien été reçue. Votre gérant vous recontactera d'ici peu pour donner suite ou non à votre présence réduite.", ephemeral=True) #Message pour le staff qui fait l'annonce.
             await channel.send(content=f"{ctx.member.user.id} - <@!795745320629567489>", embeds=embed, components=buttonsABS)
 
 
@@ -98,12 +100,20 @@ class absenceManager(interactions.Extension):
                     ["Raison fournie:", pr_modal_reason, False],
                 ]
             )
-
-            await ctx.send("Votre absence a bien été reçue. Votre gérant vous recontactera d'ici peu pour donner suite ou non à votre présence réduite.", ephemeral=True) #Message pour le staff qui fait l'annonce.
             channel = await interactions.get(self.client, interactions.Channel, object_id=ABSENCECHANNEL)
-            print(ctx.member.user.id)
-            await channel.send(content=f"{ctx.member.user.id} - <@!795745320629567489>", embeds=embed, components=buttonsPR)
-
+            await ctx.send("Votre absence a bien été reçue. Votre gérant vous recontactera d'ici peu pour donner suite ou non à votre présence réduite.", ephemeral=True) #Message pour le staff qui fait l'annonce.
+            message:interactions.Message = await channel.send(content=f"<@!795745320629567489>", embeds=embed, components=buttonsPR)
+            data:dict = db["test"]
+            data[int(message.id)] = {'member': int(ctx.member.user.id), 'revoked': False}
+            db["test"] = data
+            print(db["test"])
+            # try:
+            #     data:dict = db["test"]
+            #     data.update({message.id, ctx.member.user.id})
+            #     db["test"] = data
+            #     print(db["test"])
+            # except:
+            #     print("no")
 
 def setup(client):
   print('✅ Loading AbsenceManager')
