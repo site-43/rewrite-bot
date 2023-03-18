@@ -21,24 +21,25 @@ client = interactions.Client(
     | interactions.Intents.GUILD_MESSAGE_CONTENT
     | interactions.Intents.GUILD_MEMBERS,
     disable_sync=False,
+    #logging=True,
 )
-app = Flask(__name__)
-config = Config()
-config.bind = ["0.0.0.0:80"]
+# app = Flask(__name__)
+# config = Config()
+# config.bind = ["0.0.0.0:80"]
 
 molter.setup(client, default_prefix=["s!","<"])
 [client.load(f"exts.{EXT}") for EXT in EXTENSIONS]
 
 
-@app.route('/')
-async def home():
-     return 'Running !'
-loop = asyncio.get_event_loop()
+# @app.route('/')
+# async def home():
+#      return 'Running !'
+# loop = asyncio.get_event_loop()
 
-task1 = loop.create_task((serve(WsgiToAsgi(app), config)))
-task2 = loop.create_task(client._ready())
+# task1 = loop.create_task((serve(WsgiToAsgi(app), config)))
+# task2 = loop.create_task(client._ready())
 
-gathered = asyncio.gather(task1,task2)
-loop.run_until_complete(gathered)
+# gathered = asyncio.gather(task1,task2)
+# loop.run_until_complete(gathered)
 
-#client.start()
+client.start()

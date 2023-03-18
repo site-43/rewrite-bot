@@ -1,4 +1,5 @@
 import interactions
+from utils.logs import new_log
 from utils.embeds import create_error_embed
 def add_button(
     type:interactions.ButtonStyle = interactions.ButtonStyle.PRIMARY,

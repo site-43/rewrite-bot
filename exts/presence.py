@@ -8,11 +8,11 @@ import datetime
 import asyncio
 buttonsABS = [
     add_button(type=interactions.ButtonStyle.SUCCESS, label="Accepter", emoji=interactions.Emoji(name="✅"), custom_id="accept1"),
-    add_button(type=interactions.ButtonStyle.DANGER, label="Refuser", emoji=interactions.Emoji(name="❌"), custom_id="refuse1")
+    add_button(type=interactions.ButtonStyle.DANGER, label="Refuser", emoji=interactions.Emoji(name="❌"), custom_id="refuse")
 ]
 buttonsPR = [
     add_button(type=interactions.ButtonStyle.SUCCESS, label="Accepter", emoji=interactions.Emoji(name="✅"), custom_id="accept2"),
-    add_button(type=interactions.ButtonStyle.DANGER, label="Refuser", emoji=interactions.Emoji(name="❌"), custom_id="refuse2")
+    add_button(type=interactions.ButtonStyle.DANGER, label="Refuser", emoji=interactions.Emoji(name="❌"), custom_id="refuse")
 ]
 db = {}
 db["test"] = {}
@@ -23,6 +23,7 @@ class absenceManager(interactions.Extension):
     def __init__(self, client):
 
         self.client: interactions.Client = client
+    
     async def check(values:dict = None):
         
         if values == None:
@@ -54,13 +55,16 @@ class absenceManager(interactions.Extension):
       await GuildMember.add_role(912700941722091530)
       await ctx.send("Le rôle Présence Réduite a été ajouté.")
 
-    @interactions.extension_component("refuse1")
+    @interactions.extension_component("refuse")
     async def refuse1(self, ctx: interactions.ComponentContext):
-      await ctx.send("**Absence refusée** - Vous avez refusé cette absence.")
+      message = ctx.message
+      print("e")
+      await ctx.send("**Demande refusée** - Vous avez refusé la demande.")
+      print(message.embeds)
+      embed = message.embeds[0]
+      embed.color = 0xd40000
+      await message.edit(embeds=embed)
 
-    @interactions.extension_component("refuse2")
-    async def refuse2(self, ctx: interactions.ComponentContext):
-      await ctx.send("**Présence réduite refusée** - Vous avez refusé cette présence réduite.")
 
     @interactions.extension_modal('abs_requests')
     async def absmodalcb(self, ctx: interactions.CommandContext, abs_requests_reason: str, abs_requests_depart_date: str, abs_requests_retour_date: str):
@@ -88,7 +92,7 @@ class absenceManager(interactions.Extension):
                 await ctx.send("Erreur, veuillez communiquer des dates valides en suivant le format `DD/MM/YYYY`.\nExemple: `01/02/2023`", ephemeral=True)
                 return
 
-            embed = new_embed(
+            embed:interactions.Embed = new_embed(
 
                 title=f"Présence réduite de {ctx.author.id}",
 
@@ -102,11 +106,16 @@ class absenceManager(interactions.Extension):
             )
             channel = await interactions.get(self.client, interactions.Channel, object_id=ABSENCECHANNEL)
             await ctx.send("Votre absence a bien été reçue. Votre gérant vous recontactera d'ici peu pour donner suite ou non à votre présence réduite.", ephemeral=True) #Message pour le staff qui fait l'annonce.
-            message:interactions.Message = await channel.send(content=f"<@!795745320629567489>", embeds=embed, components=buttonsPR)
+            
+            message:interactions.Message = await channel.send(content=f"<@!795745320629567489>", embeds=[embed], components=buttonsPR)
+            
+            
             data:dict = db["test"]
-            data[int(message.id)] = {'member': int(ctx.member.user.id), 'revoked': False}
+            data[int(message.id)] = {'member': int(ctx.member.user.id)}
             db["test"] = data
             print(db["test"])
+            
+            
             # try:
             #     data:dict = db["test"]
             #     data.update({message.id, ctx.member.user.id})

@@ -1,7 +1,7 @@
 import interactions
 
-from utils.embeds import new_embed
-
+from utils.embeds import new_embed, new_notify_embed
+from utils.logs import new_log
 
 class Help(interactions.Extension):
     @interactions.extension_command(name="help", description="Montre toutes les commandes du bot")
@@ -15,6 +15,7 @@ class Help(interactions.Extension):
                 embed.add_field(name=f"{command.name}", value=command.description)
 
         await ctx.send(embeds=[embed], ephemeral=True)
+        await new_log(self.client, "test", 1063194130064359545, embeds=[new_notify_embed("test")])
 
 
 def setup(client: interactions.Client):
