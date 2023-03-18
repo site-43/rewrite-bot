@@ -1,6 +1,6 @@
 import interactions
 #from replit import db
-from configs import OWNER_ID, ABSENCECHANNEL
+from configs import OWNER_ID, ABSENCECHANNEL, STAFFGUILD
 from utils.embeds import new_embed, create_error_embed
 from utils.components import add_button
 from utils.modals import absmodal, prmodal
@@ -122,7 +122,7 @@ class absenceManager(interactions.Extension):
             #     db["test"] = data
             #     print(db["test"])
             # except:
-            #     print("no")
+            #     print("no.")
 
 def setup(client):
   print('✅ Loading AbsenceManager')
