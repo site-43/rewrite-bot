@@ -45,9 +45,8 @@ class absenceManager(interactions.Extension):
 
     @interactions.extension_component("accept1")
     async def accept1(self, ctx: interactions.ComponentContext):
-      GuildMember = await ctx.guild.get_member(str(ctx.message.content).split(" ")[0])
-      await GuildMember.add_role(758365326961803385)
-      await ctx.send("Le rôle Absence a été ajouté.")
+      if ctx.message.id in db["test"]:
+        await ctx.send(f"Found. User: {db['test']['member']}")
     
     @interactions.extension_component("accept2")
     async def accept2(self, ctx: interactions.ComponentContext):
