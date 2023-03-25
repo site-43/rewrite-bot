@@ -34,11 +34,11 @@ class absenceManager(interactions.Extension):
           embed = message.embeds[0]
           if embed and data:
             embed.color = 0x00114f
-            embed.add_field('Statut', "Terminé")
+            embed.fields[1].value = "`Terminée`"
           await message.edit(embeds=embed)
-          await ctx.send(f"La pause de <@!{data['member']}> a été arrêtée ")
+          await ctx.send(f'La pause de <@!{data["member"]}> a été arrêtée', ephemeral=True)
       except:
-        await Valid.delete()
+        await validmessage.delete()
 
     @interactions.extension_component("abs_request_sender")
     async def btnabs(self, ctx: interactions.CommandContext):
@@ -63,6 +63,7 @@ class absenceManager(interactions.Extension):
         await message.disable_all_components()
         
         await message.edit(embeds=embed, components=[add_button(label="Mettre fin", emoji=interactions.Emoji(name="🕓"), custom_id="abortPause")])
+        await ctx.send("Vous avez accepté l'absence.", ephemeral=True)
       else:
         await ctx.send(embeds=[create_error_embed('Une erreur est survenue, les données de cette absences n\'ont pas été trouvées.')])
     
@@ -75,7 +76,6 @@ class absenceManager(interactions.Extension):
     @interactions.extension_component("refuse")
     async def refuse1(self, ctx: interactions.ComponentContext):
       message = ctx.message
-      print("e")
       await ctx.send("**Demande refusée** - Vous avez refusé la demande.")
       print(message.embeds)
       embed = message.embeds[0]
@@ -85,7 +85,7 @@ class absenceManager(interactions.Extension):
 
     @interactions.extension_modal('abs_requests')
     async def absmodalcb(self, ctx: interactions.CommandContext, abs_requests_reason: str, abs_requests_depart_date: str, abs_requests_retour_date: str):
-      embed = new_embed(title=f"Absence", description=f"**Une nouvelle absence a été signalée par {ctx.author.mention}**", fields=[["Raison", abs_requests_reason, False], ["Statut", "En attente", False], ["Gérant", "Non accepté", False], ["Dates", f"{abs_requests_depart_date} - {abs_requests_retour_date}", False]])
+      embed = new_embed(title=f"Absence", description=f"**Une nouvelle absence a été signalée par {ctx.author.mention}**", fields=[["Raison", abs_requests_reason, False], ["Statut", "`En attente`", False], ["Gérant", "Non accepté", False], ["Dates", f"{abs_requests_depart_date} - {abs_requests_retour_date}", False]])
       channel = await interactions.get(self.client, interactions.Channel, object_id=ABSENCECHANNEL)
       await ctx.send("Votre absence a bien été reçue. Votre gérant vous recontactera d'ici peu pour donner suite ou non à votre présence réduite.", ephemeral=True)
       message = await channel.send(content="<@!795745320629567489>", embeds=embed, components=buttonsABS)
@@ -97,23 +97,7 @@ class absenceManager(interactions.Extension):
     
     @interactions.extension_modal('pr_modal')
     async def prmodalcb(self, ctx: interactions.CommandContext, pr_modal_reason: str, pr_modal_depart: str, pr_modal_retour: str):
-
-            embed:interactions.Embed = new_embed(
-
-                title=f"Présence réduite de {ctx.author.id}",
-
-                description=f"**Une nouvelle présence réduite a été signalée par {ctx.author.mention}**",
-
-                fields=[
-                    ["Date de départ fournie:", f"<t:{dates[0]}:D>", False],
-                    ["Date de retour fournie:", f"<t:{dates[0]}:D>", False],
-                    ["Raison fournie:", pr_modal_reason, False],
-                ]
-            )
-            channel = await interactions.get(self.client, interactions.Channel, object_id=ABSENCECHANNEL)
-            await ctx.send("Votre absence a bien été reçue. Votre gérant vous recontactera d'ici peu pour donner suite ou non à votre présence réduite.", ephemeral=True) 
-            
-            message:interactions.Message = await channel.send(content=f"<@!795745320629567489>", embeds=[embed], components=buttonsPR)
+      print("No")
 
 def setup(client):
   print('✅ Loading AbsenceManager')
