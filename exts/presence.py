@@ -89,7 +89,7 @@ class absenceManager(interactions.Extension):
         embed.title = f"{embed.title} refusée de {member.user.username}" 
         await message.edit(embeds=embed)
       else:
-        await ctx.send(embeds=[create_error_embed('Une erreur est survenue, les données de cette absences n\'ont pas été trouvées.')])
+        await ctx.send(embeds=[create_error_embed('Une erreur est survenue, les données de cette absence/PR n\'ont pas été trouvées.')])
 
 
 
