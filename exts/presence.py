@@ -85,9 +85,6 @@ class absenceManager(interactions.Extension):
 
     @interactions.extension_modal('abs_requests')
     async def absmodalcb(self, ctx: interactions.CommandContext, abs_requests_reason: str, abs_requests_depart_date: str, abs_requests_retour_date: str):
-      if not dates:
-        await ctx.send("Erreur, veuillez communiquer des dates valides en suivant le format `DD/MM/YYYY`.\nExemple: `01/02/2023`", ephemeral=True)
-        return
       embed = new_embed(title=f"Absence", description=f"**Une nouvelle absence a été signalée par {ctx.author.mention}**", fields=[["Raison", abs_requests_reason, False], ["Statut", "En attente", False], ["Gérant", "Non accepté", False], ["Dates", f"{abs_requests_depart_date} - {abs_requests_retour_date}", False]])
       channel = await interactions.get(self.client, interactions.Channel, object_id=ABSENCECHANNEL)
       await ctx.send("Votre absence a bien été reçue. Votre gérant vous recontactera d'ici peu pour donner suite ou non à votre présence réduite.", ephemeral=True)
@@ -100,10 +97,6 @@ class absenceManager(interactions.Extension):
     
     @interactions.extension_modal('pr_modal')
     async def prmodalcb(self, ctx: interactions.CommandContext, pr_modal_reason: str, pr_modal_depart: str, pr_modal_retour: str):
-            print('Received.')
-            if not dates:
-                await ctx.send("Erreur, veuillez communiquer des dates valides en suivant le format `DD/MM/YYYY`.\nExemple: `01/02/2023`", ephemeral=True)
-                return
 
             embed:interactions.Embed = new_embed(
 
