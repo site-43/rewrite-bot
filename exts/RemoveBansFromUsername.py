@@ -44,8 +44,7 @@ class Extension(molter.MolterExtension):
             [await ctx.guild.remove_ban(foundMemberID, f"Unban par {ctx.author.name}:{ctx.author.id}") for foundMemberID in found]
             [print(f"{Fore.YELLOW}[:: Unban ::] {ctx.author.name} a unban l'id {Fore.CYAN}{uid}{Fore.RESET}") for uid in found]
         except:
-            errors.append(user_id)
-        ##print("LENGTH:", len(errors))
+            print(f"{Fore.RED} Invalid action.{Fore.RESET}")
         if len(errors) == 0:
             await ctx.send(embeds=[
                 new_notify_embed(f"Tout s'est bien déroulé, j'ai pu unban {len(found)} personnes comportant les caractères `{name}` à la suite dans leur pseudonyme.")
