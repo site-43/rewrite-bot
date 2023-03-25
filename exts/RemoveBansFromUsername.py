@@ -1,5 +1,6 @@
 import interactions
 import asyncio
+from configs import LOGSTAFF
 from interactions.ext import molter
 from utils.embeds import new_notify_embed, create_error_embed, new_embed
 from utils.logs import new_log
@@ -11,7 +12,7 @@ class Extension(molter.MolterExtension):
 
     @molter.prefixed_command(name="unban")
     async def removebans(self, ctx: molter.MolterContext, *, name: str):
-        await new_log(self.client, channel=1054061622869635163, embeds=[new_embed(title="Unban", description=f"{ctx.author.mention} a lancé la commande unban.")])
+        await new_log(self.client, channel=LOGSTAFF, embeds=[new_embed(title="Unban", description=f"{ctx.author.mention} a lancé la commande unban.")])
         if ctx.guild_id == None:
             await ctx.send(embeds=[
                 create_error_embed("Cette commande n'est pas utilisable en Messages Privés.")
@@ -39,22 +40,25 @@ class Extension(molter.MolterExtension):
             await message.edit(embeds=[create_error_embed("La recherche de bans avec ce nom d'utilisateur n'a rien donné.")])
             return
         await ctx.reply(embeds=[new_notify_embed(f"J'ai trouvé {len(found)} personne(s) à unban.\n<a:loading:1086257424534605975> Temps estimé des opérations: {(len(found)*2)} secondes")])
-        try:
-            await asyncio.sleep(2) #Pour avoid les ratelimits.
-            [await ctx.guild.remove_ban(foundMemberID, f"Unban par {ctx.author.name}:{ctx.author.id}") for foundMemberID in found]
-            [print(f"{Fore.YELLOW}[:: Unban ::] {ctx.author.name} a unban l'id {Fore.CYAN}{uid}{Fore.RESET}") for uid in found]
-        except:
-            print(f"{Fore.RED} Invalid action.{Fore.RESET}")
+        for item in found:
+
+            try:
+                await asyncio.sleep(2) #Pour avoid les ratelimits.
+                await ctx.guild.remove_ban(item, f"Unban par {ctx.author.name}:{ctx.author.id}")
+                print(f"{Fore.YELLOW}[:: Unban ::] {ctx.author.name} a unban l'id {Fore.CYAN}{item}{Fore.RESET}")
+            except:
+                errors.append(item)
+        ##print("LENGTH:", len(errors))
         if len(errors) == 0:
             await ctx.send(embeds=[
                 new_notify_embed(f"Tout s'est bien déroulé, j'ai pu unban {len(found)} personnes comportant les caractères `{name}` à la suite dans leur pseudonyme.")
             ])
-            await new_log(self.client, channel=1054061622869635163, embeds=[new_embed(title="Unban", description=f"{ctx.author.mention} a unbanni {len(found)} utilisateurs.")])
+            await new_log(self.client, channel=LOGSTAFF, embeds=[new_embed(title="Unban", description=f"{ctx.author.mention} a unbanni {len(found)} utilisateurs.")])
         else:
             await ctx.send(embeds=[
-                create_error_embed(f"Je n'ai pas réussi a unban tous les comptes. Veuillez vous référer à la console pour obtenir les identifiants non bannis.")
+                create_error_embed("Je n'ai pas réussi a unban tous les comptes. Veuillez vous référer à la console pour obtenir les identifiants non bannis.")
             ])
-            [print(error) for error in errors]
+            [print(f"{Fore.RED}[:: Unban ::] {error} {Fore.RESET}") for error in errors]
 
 def setup(client):
     Extension(client)
