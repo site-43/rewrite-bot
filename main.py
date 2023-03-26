@@ -42,5 +42,5 @@ molter.setup(client, default_prefix=["s!","<"])
 
 # gathered = asyncio.gather(task1,task2)
 # loop.run_until_complete(gathered)
-print(datetime.datetime.now().timestamp())
+print("Je viens d'être démarré !")
 client.start()

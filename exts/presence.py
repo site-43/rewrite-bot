@@ -6,7 +6,6 @@ from utils.modals import absmodal, prmodal
 from utils.database import addData, getData
 import datetime
 from colorama import Fore
-import math
 import asyncio
 import pymongo
 buttonsABS = [

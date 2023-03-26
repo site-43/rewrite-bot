@@ -9,7 +9,7 @@ class Extension(interactions.Extension):
         description='Obtenez le statut du bot.',
     )
     async def status(self, ctx:interactions.CommandContext):
-        await ctx.send("☑️")
+        await ctx.send("☑️ okok")
 
 def setup(client):
     Extension(client)
