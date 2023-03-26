@@ -35,9 +35,11 @@ class absenceManager(interactions.Extension):
           if embed and data:
             embed.color = 0x00114f
             embed.fields[1].value = "`Terminée`"
-          await message.edit(embeds=embed)
+          channel = await interactions.get(self.client, interactions.Channel, object_id=1089489011791384736)
+          await channel.send(embeds=embed)
+          await message.delete()
           await validmessage.delete()
-          await ctx.send(f'La pause de <@!{data["member"]}> a été arrêtée', ephemeral=True)
+          await ctx.send(f'La pause de <@!{data["member"]}> a été arrêtée, et a été archivée.', ephemeral=True)
       except:
         await validmessage.delete()
 
@@ -86,7 +88,9 @@ class absenceManager(interactions.Extension):
         embed.fields[1].value = "`Refusé`"
         embed.fields[2].value = ctx.author.mention
         embed.title = f"{embed.title} refusée de {member.user.username}" 
-        await message.edit(embeds=embed)
+        channel = await interactions.get(self.client, interactions.Channel, object_id=1089489011791384736)
+        await channel.send(embeds=embed)
+        await message.delete()
       else:
         await ctx.send(embeds=[create_error_embed('Une erreur est survenue, les données de cette absence/PR n\'ont pas été trouvées.')])
 
@@ -98,7 +102,6 @@ class absenceManager(interactions.Extension):
       channel = await interactions.get(self.client, interactions.Channel, object_id=ABSENCECHANNEL)
       await ctx.send("Votre absence a bien été reçue. Votre gérant vous recontactera d'ici peu pour donner suite ou non à votre présence réduite.", ephemeral=True)
       message = await channel.send(content="<@!795745320629567489>", embeds=embed, components=buttonsABS)
-      message.edit(content="")
       await addData(collection="absences", document={"_id": int(message.id), 'member': int(ctx.member.user.id), 'types': 'Absence'})
 
 
