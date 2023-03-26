@@ -116,7 +116,7 @@ class absenceManager(interactions.Extension):
       channel = await interactions.get(self.client, interactions.Channel, object_id=ABSENCECHANNEL)
       await ctx.send("Votre présence réduite a bien été reçue. Votre gérant vous recontactera d'ici peu pour donner suite ou non à votre présence réduite.", ephemeral=True)
       message = await channel.send(content="<@!795745320629567489>", embeds=embed, components=buttonsABS)
-      message.edit(content="")
+      await message.edit(content="")
       await addData(collection="absences", document={"_id": int(message.id), 'member': int(ctx.member.user.id), 'types': 'Présence réduite'})
 
 def setup(client):
