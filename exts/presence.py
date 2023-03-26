@@ -111,5 +111,5 @@ class absenceManager(interactions.Extension):
       print("No")
 
 def setup(client):
-  print('✅ Loading AbsenceManager')
+  print('Loading AbsenceManager')
   absenceManager(client)
