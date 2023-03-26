@@ -31,8 +31,11 @@ class absenceManager(interactions.Extension):
         Valid:interactions.ComponentContext = await self.client.wait_for_component(components=bouton, messages =[validmessage], timeout=20)
         if Valid.custom_id == 'disable_temp_btn':
           data = await getData(collection="absences", searchValue={"_id": int(message.id)})
+          if not data:
+            await ctx.send(embeds=[create_error_embed('Une erreur est survenue, les données de cette absence/PR n\'ont pas été trouvées.')])
+            return
           embed = message.embeds[0]
-          if embed and data:
+          if embed:
             embed.color = 0x00114f
             embed.fields[1].value = "`Terminée`"
           channel = await interactions.get(self.client, interactions.Channel, object_id=1089489011791384736)
