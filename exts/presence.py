@@ -10,11 +10,11 @@ import math
 import asyncio
 import pymongo
 buttonsABS = [
-    add_button(style=interactions.ButtonStyle.SUCCESS, label="Accepter", emoji=interactions.Emoji(name="✅"), custom_id="accept1"),
+    add_button(style=interactions.ButtonStyle.SUCCESS, label="Accepter", emoji=interactions.Emoji(name="✅"), custom_id="accept"),
     add_button(style=interactions.ButtonStyle.DANGER, label="Refuser", emoji=interactions.Emoji(name="❌"), custom_id="refuse")
 ]
 buttonsPR = [
-    add_button(style=interactions.ButtonStyle.SUCCESS, label="Accepter", emoji=interactions.Emoji(name="✅"), custom_id="accept2"),
+    add_button(style=interactions.ButtonStyle.SUCCESS, label="Accepter", emoji=interactions.Emoji(name="✅"), custom_id="accept"),
     add_button(style=interactions.ButtonStyle.DANGER, label="Refuser", emoji=interactions.Emoji(name="❌"), custom_id="refuse")
 ]
 
@@ -49,16 +49,21 @@ class absenceManager(interactions.Extension):
     async def btnpr(self, ctx: interactions.ComponentContext):
       await ctx.popup(prmodal)
 
-    @interactions.extension_component("accept1")
+    @interactions.extension_component("accept")
     async def accept1(self, ctx: interactions.ComponentContext):
       message = ctx.message
       data = await getData(collection="absences", searchValue={"_id": int(ctx.message.id)})
       if data:
+        name = data["types"]
         member = await interactions.get(self.client, interactions.Member, object_id=data["member"], parent_id=ctx.guild_id)
-        await member.add_role(1042146870446800956)
+        if data["types"] == "Absence":
+          await member.add_role(1042146870446800956)
+        else:
+          await member.add_role(1041788969798602754)
+        
         embed:interactions.Embed = ctx.message.embeds[0]
         embed.color = 0x00ff08
-        embed.title = f"Absence autorisée de {member.user.username}"
+        embed.title = f"{name} autorisée de {member.user.username}"
         embed.fields[1].value = "`En cours`"
         embed.fields[2].value = ctx.author.mention
         await message.disable_all_components()
@@ -67,12 +72,6 @@ class absenceManager(interactions.Extension):
         await ctx.send("Vous avez accepté l'absence.", ephemeral=True)
       else:
         await ctx.send(embeds=[create_error_embed('Une erreur est survenue, les données de cette absences n\'ont pas été trouvées.')])
-    
-    @interactions.extension_component("accept2")
-    async def accept2(self, ctx: interactions.ComponentContext):
-      GuildMember = await ctx.guild.get_member(str(ctx.message.content).split(" ")[0])
-      await GuildMember.add_role(912700941722091530)
-      await ctx.send("Le rôle Présence Réduite a été ajouté.")
 
     @interactions.extension_component("refuse")
     async def refuse1(self, ctx: interactions.ComponentContext):
@@ -100,7 +99,7 @@ class absenceManager(interactions.Extension):
       await ctx.send("Votre absence a bien été reçue. Votre gérant vous recontactera d'ici peu pour donner suite ou non à votre présence réduite.", ephemeral=True)
       message = await channel.send(content="<@!795745320629567489>", embeds=embed, components=buttonsABS)
       message.edit(content=None)
-      await addData(collection="absences", document={"_id": int(message.id), 'member': int(ctx.member.user.id), 'date': int(datetime.datetime.now().timestamp())})
+      await addData(collection="absences", document={"_id": int(message.id), 'member': int(ctx.member.user.id), 'types': 'Absence'})
 
 
 ########################################################################
