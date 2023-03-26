@@ -69,7 +69,7 @@ class absenceManager(interactions.Extension):
         await message.disable_all_components()
         
         await message.edit(embeds=embed, components=[add_button(label="Mettre fin", emoji=interactions.Emoji(name="🕓"), custom_id="abortPause")])
-        await ctx.send("Vous avez accepté l'absence.", ephemeral=True)
+        await ctx.send(f'Vous avez accepté cette {data["types"]}', ephemeral=True)
       else:
         await ctx.send(embeds=[create_error_embed('Une erreur est survenue, les données de cette absences n\'ont pas été trouvées.')])
 
@@ -98,16 +98,20 @@ class absenceManager(interactions.Extension):
       channel = await interactions.get(self.client, interactions.Channel, object_id=ABSENCECHANNEL)
       await ctx.send("Votre absence a bien été reçue. Votre gérant vous recontactera d'ici peu pour donner suite ou non à votre présence réduite.", ephemeral=True)
       message = await channel.send(content="<@!795745320629567489>", embeds=embed, components=buttonsABS)
-      message.edit(content=None)
+      message.edit(content="")
       await addData(collection="absences", document={"_id": int(message.id), 'member': int(ctx.member.user.id), 'types': 'Absence'})
 
 
 ########################################################################
-        
-    
+
     @interactions.extension_modal('pr_modal')
     async def prmodalcb(self, ctx: interactions.CommandContext, pr_modal_reason: str, pr_modal_depart: str, pr_modal_retour: str):
-      print("No")
+      embed = new_embed(title=f"Présence réduite", description=f"**Une nouvelle présence réduite a été signalée par {ctx.author.mention}**", fields=[["Raison", pr_modal_reason, False], ["Statut", "`En attente`", False], ["Gérant", "Non accepté", False], ["Dates", f"{pr_modal_depart} - {pr_modal_retour}", False]])
+      channel = await interactions.get(self.client, interactions.Channel, object_id=ABSENCECHANNEL)
+      await ctx.send("Votre présence réduite a bien été reçue. Votre gérant vous recontactera d'ici peu pour donner suite ou non à votre présence réduite.", ephemeral=True)
+      message = await channel.send(content="<@!795745320629567489>", embeds=embed, components=buttonsABS)
+      message.edit(content="")
+      await addData(collection="absences", document={"_id": int(message.id), 'member': int(ctx.member.user.id), 'types': 'Présence réduite'})
 
 def setup(client):
   print('Loading AbsenceManager')
