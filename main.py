@@ -15,7 +15,6 @@ from dotenv import load_dotenv
 load_dotenv()
 EXTENSIONS = [file.replace(".py", "") for file in os.listdir("exts") if file.endswith(".py")]
 
-# client = interactions.Client(token="") -> Bot Canarypy 
 client = interactions.Client(
     token=os.getenv("TOKEN"),
     intents=interactions.Intents.DEFAULT
