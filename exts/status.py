@@ -1,5 +1,5 @@
 import interactions
-from utils.RobloxApiBridge import get
+from utils.RobloxApiBridge import get, GetUserIdFromName
 from utils.embeds import create_error_embed
 class Extension(interactions.Extension):
     def __init__(self, client):
@@ -30,7 +30,7 @@ class Extension(interactions.Extension):
             return False
         currentUser = None
         if pseudonyme:
-            currentUser = await pseudo()
+            currentUser = await GetUserIdFromName()
         else:
             currentUser = userid
         

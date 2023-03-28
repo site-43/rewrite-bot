@@ -17,3 +17,6 @@ async def get(
     async with aiohttp.request("GET", baseURL+url, headers=headers) as response:
         print(await response.json())
         return response
+
+async def GetUserIdFromName(pseudo:str = None):
+    print(pseudo)
