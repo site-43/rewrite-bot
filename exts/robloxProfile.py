@@ -1,6 +1,6 @@
 import interactions
 from utils.RobloxApiBridge import get, GetUserIdFromName
-from utils.embeds import create_error_embed
+from utils.embeds import create_error_embed, new_embed
 class Extension(interactions.Extension):
     def __init__(self, client):
         self.client: interactions.Client = client
@@ -30,13 +30,25 @@ class Extension(interactions.Extension):
             return False
         currentUser = None
         if pseudonyme:
-            currentUser = await GetUserIdFromName()
+            currentUser = await GetUserIdFromName(pseudo=pseudonyme)
         else:
             currentUser = userid
         
         data = await get(url=f'/standard-datastores/datastore/entries/entry?datastoreName=V2&entryKey=heheboi_{currentUser}', headers={})
+        if data == False:
+            await ctx.send(embeds=[create_error_embed("Aucune entrée n'a été trouvée avec cet utilisateur.")])
+            return
         json = await data.json()
-        await ctx.send(content=f'XP: {json["Data"]["Experience"]}')
+        await ctx.send(embeds=[
+            new_embed(
+                title="Statistiques du joueur",
+                description="Consultez les informations de l'individu.",
+                fields=[
+                    ["XP", json["Data"]["Experience"], False],
+                    ["Dernière connection", f'<t:{json["MetaData"]["LastUpdate"]}:R>', False]
+                ]
+            )
+        ])
 
 
 def setup(client):
