@@ -27,6 +27,7 @@ class configurator(interactions.Extension):
                 await message.delete()
             except:
                 await currentMessage.edit(embeds=[create_error_embed("Le bot n'a pas les permissions suffisantes pour accéder au salon & écrire dedans.")])
+                return
             try:
                 await addData(database="main", collection="configs", document={'_id': int(ctx.guild_id), 'grole': int(gerants.id), 'gannouncement': int(gannouncement.id), 'announcementGlobal': int(announcement.id)})
             except:
