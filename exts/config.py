@@ -22,9 +22,11 @@ class configurator(interactions.Extension):
         if sub_command == "new":
             currentMessage = await ctx.send(embeds=[new_notify_embed("<a:loading:1086257424534605975> Début de la procédure de configuration...")])
             await asyncio.sleep(2)
-            me = await interactions.get(self.client, interactions.Member, object_id=self.client.me.id, parent_id=ctx.guild_id)
-            if not await me.has_permissions([interactions.Permissions.MENTION_EVERYONE, interactions.Permissions.SEND_MESSAGES, interactions.Permissions.MANAGE_CHANNELS]):
-                await ctx.send(embeds=[create_error_embed('Je n\'ai pas les permissions suffisantes pour l\'effectuer.')])
+            try:
+                message = await gannouncement.send("Le salon est répertorié comme Salon d'informations pour les gérants du Serveur.")
+                await message.delete()
+            except:
+                await currentMessage.edit(embeds=[create_error_embed("Le bot n'a pas les permissions suffisantes pour accéder au salon & écrire dedans.")])
             try:
                 await addData(database="main", collection="configs", document={'_id': int(ctx.guild_id), 'grole': int(gerants.id), 'gannouncement': int(gannouncement.id), 'announcementGlobal': int(announcement.id)})
             except:
