@@ -39,13 +39,15 @@ class Extension(interactions.Extension):
             await ctx.send(embeds=[create_error_embed("Aucune entrée n'a été trouvée avec cet utilisateur.")])
             return
         json = await data.json()
+        isReported = "Non" if json["Data"]["Reported"] == False else "Oui"
         await ctx.send(embeds=[
             new_embed(
                 title="Statistiques du joueur",
                 description="Consultez les informations de l'individu.",
                 fields=[
                     ["XP", json["Data"]["Experience"], False],
-                    ["Dernière connection", f'<t:{json["MetaData"]["LastUpdate"]}:R>', False]
+                    ["Dernière update des données", f'<t:{json["MetaData"]["LastUpdate"]}:R>', False],
+                    ["Report actif", isReported, False]
                 ]
             )
         ])

@@ -18,14 +18,13 @@ async def addData(
         return
     
     database = cluster[database][collection]
-    print(database)
     data = database.insert_one(document)
     return data
 
 async def getData(
     database: str = "main",
     collection: str = "unsaved",
-    searchValue: dict = {}
+    searchValue: dict = None
 ):
     if not searchValue:
         return False
@@ -33,3 +32,25 @@ async def getData(
     database = cluster[database][collection]
     data = database.find_one(searchValue)
     return data or None
+
+async def deleteData(
+    database:str = "main",
+    collection: str = "unsaved",
+    searchValue: dict = None
+):
+    if not searchValue:
+        return False
+    
+    database = cluster[database][collection]
+    todel = database.find_one(searchValue)
+    if todel:
+        database.delete_one(todel)
+    else:
+        return None
+
+async def getCount(
+    database:str = "main",
+    collection:str = "unsaved"
+):
+    database = cluster[database][collection]
+    return database.estimated_document_count()

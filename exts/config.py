@@ -24,9 +24,10 @@ class configurator(interactions.Extension):
             await asyncio.sleep(2)
             try:
                 message = await gannouncement.send("Le salon est répertorié comme Salon d'informations pour les gérants du Serveur.")
+                await asyncio.sleep(2)
                 await message.delete()
             except:
-                await currentMessage.edit(embeds=[create_error_embed("Le bot n'a pas les permissions suffisantes pour accéder au salon & écrire dedans.")])
+                await currentMessage.edit(embeds=[create_error_embed("Le bot n'a pas les permissions suffisantes pour accéder au salon & écrire / supprimer des messages dedans.")])
                 return
             try:
                 await addData(database="main", collection="configs", document={'_id': int(ctx.guild_id), 'grole': int(gerants.id), 'gannouncement': int(gannouncement.id), 'announcementGlobal': int(announcement.id)})
