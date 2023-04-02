@@ -48,6 +48,18 @@ async def deleteData(
     else:
         return None
 
+async def updateData(
+    database:str = "main",
+    collection: str = "unsaved",
+    filters: str = None,
+    document: str = None
+):
+    if not document or not filters:
+        return False
+    print(filters)
+    database = cluster[database][collection]
+    toupdate = database.update_one(filters, document)
+
 async def getCount(
     database:str = "main",
     collection:str = "unsaved"
