@@ -43,6 +43,9 @@ class Extension(interactions.Extension):
             embed = message.embeds[0]
             embed.fields[0].value = await getCount(collection="services")
             await message.edit(embeds=embed, components=compos)
+
+
+    
     @interactions.extension_command(
         name="sendservice",
     )
