@@ -1,7 +1,7 @@
 import interactions
 import asyncio
 from utils.embeds import new_embed, new_notify_embed, create_error_embed
-from utils.database import addData
+from utils.database import addData, getData, deleteData
 class configurator(interactions.Extension):
     def __init__(self, client):
         self.client: interactions.Client = client
@@ -30,18 +30,19 @@ class configurator(interactions.Extension):
                 await currentMessage.edit(embeds=[create_error_embed("Le bot n'a pas les permissions suffisantes pour accéder au salon & écrire / supprimer des messages dedans.")])
                 return
             try:
-                await addData(database="main", collection="configs", document={'_id': int(ctx.guild_id), 'grole': int(gerants.id), 'gannouncement': int(gannouncement.id), 'announcementGlobal': int(announcement.id)})
+                await addData(database="main", collection="configs", document={'_id': int(ctx.guild_id), 'servername':ctx.guild.name,'grole': int(gerants.id), 'gannouncement': int(gannouncement.id), 'announcementGlobal': int(announcement.id)})
             except:
                 await currentMessage.edit(embeds=[create_error_embed("Une erreur est survenue lors de la configuration du serveur.")])
                 return
             await currentMessage.edit(embeds=[new_embed(
                 title="Configuration",
-                description="La configuration est en cours de progression, voici les informations qui sont enregistrées:",
+                description="La configuration est terminée, voici les informations qui sont enregistrées:",
                 fields=[["Rôle des gérants", gerants.mention, False], ["Salon des annonces gérants", gannouncement.mention, False], ["Salon des annonces personnel", announcement.mention, False]],
                 footer_text=f"Configuration par {ctx.author.name}"
             )])
         if sub_command == "reset":
             await ctx.send(embeds=[new_notify_embed("<a:loading:1086257424534605975> - Reset en cours.")])
+            await deleteData(collection="configs", searchValue={"_id": int(ctx.guild_id)})
             
 
 def setup(client):

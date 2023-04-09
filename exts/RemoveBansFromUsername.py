@@ -53,7 +53,7 @@ class Extension(molter.MolterExtension):
             await ctx.send(embeds=[
                 new_notify_embed(f"Tout s'est bien déroulé, j'ai pu unban {len(found)} personnes comportant les caractères `{name}` à la suite dans leur pseudonyme.")
             ])
-            await new_log(self.client, channel=LOGSTAFF, embeds=[new_embed(title="Unban", description=f"{ctx.author.mention} a unbanni {len(found)} utilisateurs.")])
+            await new_log(self.client, channel=LOGSTAFF, embeds=[new_embed(title="Unban", description=f"{ctx.author.mention} a unbanni {len(found)} utilisateurs comportant la suite de caractère {name}.")])
         else:
             await ctx.send(embeds=[
                 create_error_embed("Je n'ai pas réussi a unban tous les comptes. Veuillez vous référer à la console pour obtenir les identifiants non bannis.")

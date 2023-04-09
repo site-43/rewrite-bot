@@ -21,12 +21,26 @@ async def addData(
     data = database.insert_one(document)
     return data
 
+async def getAllData(
+    database: str = "main",
+    collection: str = "unsaved",
+    searchValue: dict = None
+):
+    # if not searchValue:
+    #     print("no data found")
+    #     return False
+
+    database = cluster[database][collection]
+    data = database.find(searchValue)
+    return data or None
+
 async def getData(
     database: str = "main",
     collection: str = "unsaved",
     searchValue: dict = None
 ):
     if not searchValue:
+        print("no data found")
         return False
 
     database = cluster[database][collection]
