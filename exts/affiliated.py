@@ -2,7 +2,7 @@ import interactions
 
 from utils.embeds import new_embed, new_notify_embed, create_error_embed
 from utils.database import getAllData, getData
-from utils.components import add_button
+from utils.components import add_button, modals
 
 class Extension(interactions.Extension):
     def __init__(self, client):
@@ -18,11 +18,30 @@ class Extension(interactions.Extension):
         if not server:
             return
         components = [add_button(style=interactions.ButtonStyle.PRIMARY, label="Message Global", emoji=interactions.Emoji(name="📣"), custom_id="global_msg_affiliated")]
-        msg = await ctx.edit(embeds=[embed], components=components)
+        msg = await ctx.send(embeds=[embed], components=components, ephemeral=True)
         try:
             waitfor:interactions.ComponentContext = await self.client.wait_for_component(components=components, messages=msg, timeout=20)
             if waitfor.custom_id == "global_msg_affiliated":
-                await ctx.send("Ca marche yaaaaa") # A FINIR: - Recup Salon - Demander le message -Demander si mentions - Envoyer dans le salon 
+                #await msg.disable_all_components()
+                # await ctx.send("Ca marche yaaaaa") # A FINIR: - Recup Salon - Demander le message -Demander si mentions - Envoyer dans le salon
+                await waitfor.popup(modal=modals["AffiliatedMessage"])
+                try:
+                    affimsg, fields = await self.client.wait_for_modal(modals=modals["AffiliatedMessage"], timeout=100)
+                    print(fields)
+                    cmessage = await affimsg.send(embeds=[new_notify_embed("L'envoi du message est en cours")], ephemeral=True)
+                    channel = await interactions.get(self.client, interactions.Channel, object_id=server["announcementGlobal"])
+                    if channel:
+                        try:
+                            await channel.send(fields[0])
+                            print("here")
+                            await affimsg.send(embeds=[new_notify_embed(f"Le message a été envoyé dans {channel.mention}.")])
+                            print("here??")
+                        except Exception as e:
+                            await affimsg.send(embeds=[create_error_embed("Le message n'a pas pu être envoyé.")])
+                            print(e)
+                except Exception as err:
+                    await ctx.send("Vous n'avez pas soumis votre message dans les temps.", ephemeral=True)
+                    print(err)
         except:
             await msg.delete()
 
@@ -33,7 +52,7 @@ class Extension(interactions.Extension):
         if not server:
             await ctx.send(embeds=[create_error_embed("Erreur.")])
             return
-        await ctx.send(embeds=[
+        await ctx.edit(embeds=[
             new_embed(
                 title=server["servername"],
                 description="Voici les actions affiliés que vous pouvez faire sur ce serveur.",
