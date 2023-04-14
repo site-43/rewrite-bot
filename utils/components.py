@@ -16,3 +16,14 @@ def add_button(
         disabled = Disabled
     )
     return bouton
+
+modals = {
+    "AffiliatedMessage": interactions.Modal(custom_id="AffiliatedMessage", title="Message affilié", components=[
+        interactions.TextInput(
+            style=interactions.TextStyleType.PARAGRAPH,
+            label="Message",
+            custom_id="affiliatedMsg",
+            required=True
+            )
+    ])
+}
