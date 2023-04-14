@@ -27,5 +27,5 @@ VERSION = ""
 BugChannelId = 0
 ReportStaffChannel = 0
 LogsChannel = 1054061622869635163
-
+sections = ["Developpement", "Modération", "Animation", "Création"]
 BugThread = 1094555860434432121
