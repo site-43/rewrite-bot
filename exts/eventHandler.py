@@ -8,7 +8,7 @@ class Extension(interactions.Extension):
 
     @interactions.extension_listener(name="on_command_error")
     async def on_command_error(self, ctx: interactions.CommandContext, error):
-        print("fired")
+        print(error)
         channel = await interactions.get(self.client, interactions.Channel, object_id=LogsChannel)
         await channel.send(embeds=[create_error_embed(f"**COM[{ctx.command.name}]_ERR:**\n```{error}```")])
 
