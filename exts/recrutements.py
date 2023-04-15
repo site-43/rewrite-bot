@@ -4,9 +4,11 @@ class Extension(interactions.Extension):
     def __init__(self, client):
         self.client: interactions.Client = client
 
-    @interactions.extension_component("selector_recrutement")
+    @interactions.extension_component("selector_recrutement_Developpement")
     async def selector_recrutement(self, ctx: interactions.ComponentContext, choice:str):
         await ctx.send(choice[0])
+        if choice[0] == "Scripter":
+            await ctx.send("E")
 
     @interactions.extension_command(
         name="recrutements",
@@ -22,7 +24,7 @@ class Extension(interactions.Extension):
     async def recrutements(self, ctx:interactions.CommandContext, section:str):
         await ctx.send(content=section)
         if section == "Developpement":
-            await ctx.send(components=[interactions.SelectMenu(custom_id="selector_recrutement", options=[interactions.SelectOption(label=splabel, value=splabel) for splabel in sectionsDEV])])
+            await ctx.send(components=[interactions.SelectMenu(custom_id=f"selector_recrutement_{section}", options=[interactions.SelectOption(label=splabel, value=splabel) for splabel in sectionsDEV])])
             await ctx.send("ok")
 
 def setup(client: interactions.Client):
