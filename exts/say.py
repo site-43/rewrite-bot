@@ -1,7 +1,6 @@
 import interactions
 from utils.components import modals
 from utils.embeds import new_notify_embed
-from configs import sections
 class Extension(interactions.Extension):
     def __init__(self, client):
         self.client: interactions.Client = client

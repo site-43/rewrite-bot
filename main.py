@@ -5,15 +5,16 @@ from hypercorn.config import Config
 from hypercorn.asyncio import serve
 from asgiref.wsgi import WsgiToAsgi
 import asyncio
+from colorama import Fore, Style
 import logging
 import datetime
 import time
 import os
-from configs import VERSION, OWNER_ID
 from dotenv import load_dotenv
 
 load_dotenv()
 EXTENSIONS = [file.replace(".py", "") for file in os.listdir("exts") if file.endswith(".py")]
+Loaded_Exts = []
 
 client = interactions.Client(
     token=os.getenv("TOKEN"),
@@ -21,21 +22,22 @@ client = interactions.Client(
     | interactions.Intents.GUILD_MESSAGE_CONTENT
     | interactions.Intents.GUILD_MEMBERS,
     disable_sync=False,
-    default_scope=[ 1023676017493147648] #675379685869486080,
+    default_scope=[ 675379685869486080, 1023676017493147648] #675379685869486080,
     #logging=True,
 )
 # app = Flask(__name__)
 # config = Config()
 # config.bind = ["0.0.0.0:80"]
 
-molter.setup(client, default_prefix=["s!","<"])
+# molter.setup(client, default_prefix=["s!","<"])
 # [client.load(f"exts.{EXT}") for EXT in EXTENSIONS]
 for ext in EXTENSIONS:
     try:
         client.load(f"exts.{ext}")
         print(f"Loaded {ext}")
+        Loaded_Exts.append(ext)
     except:
-        print(f"Failed to load extension {ext}")
+        print(f"{Fore.RED}[ERROR]{Fore.RESET} {Fore.LIGHTYELLOW_EX}Failed{Fore.RESET} to load extension {ext}")
 
 
 # @app.route('/')
