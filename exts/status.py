@@ -27,7 +27,7 @@ class Extension(interactions.Extension):
                 ["Serveurs", f"{len(self.client.guilds)} serveurs", True],
                 ["Démarrage du serveur", f"<t:{start_time:.0f}:R>", True],
                 ["Développeur", f"{owner.mention}", True],
-                ["Commandes", len(self.client._commands), True]
+                ["Commandes", f"{len(self.client._commands)} commandes", True]
             ]
         )
         await ctx.send(embeds=[embed])
