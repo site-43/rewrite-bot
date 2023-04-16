@@ -5,6 +5,7 @@ def new_embed(
     description: str = "",
     color: int = 0x3b7873,
     image:str = None,
+    thumb:str = None,
     fields: list[tuple[str, str, bool]] = [],
     footer_text:str = None,
 ) -> interactions.Embed:
@@ -15,6 +16,8 @@ def new_embed(
     )
     if image:
         embed.set_image(url=image)
+    if thumb:
+        embed.set_thumbnail(url=thumb)
     if footer_text:
         embed.set_footer(text=footer_text)
     for field in fields:
