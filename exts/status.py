@@ -17,7 +17,7 @@ class Extension(interactions.Extension):
         embed = utils.embeds.new_embed(
             title="Statut du bot",
             color=0xfcc38d,
-            description=f"Voici le statut du bot {self.client.me.name} !",
+            description=f"Voici le statut du bot {self.client.me.name}:",
             thumb=self.client.me.icon_url,
             fields=[
                 ["💻 Système d'exploitation", "<:Windows:1097148342410170448> Windows" if platform.system() == "Windows" else "Undefined", True],
