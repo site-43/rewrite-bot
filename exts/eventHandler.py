@@ -1,7 +1,7 @@
 import interactions
 from utils.embeds import create_error_embed, new_notify_embed
 from utils.components import add_button
-from configs import LogsChannel, BugThread
+from configs import VERSION, LogsChannel
 class Extension(interactions.Extension):
     def __init__(self, client):
         self.client: interactions.Client = client
@@ -12,6 +12,19 @@ class Extension(interactions.Extension):
         channel = await interactions.get(self.client, interactions.Channel, object_id=LogsChannel)
         await channel.send(embeds=[create_error_embed(f"**COM[{ctx.command.name}]_ERR:**\n```{error}```")])
 
+    @interactions.extension_listener(name="on_start")
+    async def on_start(self):
+        presence = interactions.ClientPresence(
+            activities=[
+                interactions.PresenceActivity(
+                    name=f"la version {VERSION}",
+                    type=interactions.PresenceActivityType.GAME
+                )
+            ],
+            status=interactions.StatusType.ONLINE,
+        )
+        await self.client.change_presence(presence=presence)
+        print("[INFO] Bot start.")
     
     # @interactions.extension_listener(name="on_thread_create")
     # async def on_thread_create(self, Thread: interactions.Thread):

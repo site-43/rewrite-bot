@@ -1,5 +1,5 @@
 import interactions
-from configs import OWNER_ID, ABSENCECHANNEL, STAFFGUILD
+from configs import SalonAbsence, LogsAbsence
 from utils.embeds import new_embed, create_error_embed
 from utils.components import add_button
 from utils.modals import absmodal, prmodal
@@ -90,7 +90,7 @@ class absenceManager(interactions.Extension):
         embed.fields[1].value = "`Refusé`"
         embed.fields[2].value = ctx.author.mention
         embed.title = f"{embed.title} refusée de {member.user.username}" 
-        channel = await interactions.get(self.client, interactions.Channel, object_id=1089489011791384736)
+        channel = await interactions.get(self.client, interactions.Channel, object_id=LogsAbsence)
         await channel.send(embeds=embed)
         await message.delete()
       else:
@@ -101,7 +101,7 @@ class absenceManager(interactions.Extension):
     @interactions.extension_modal('abs_requests')
     async def absmodalcb(self, ctx: interactions.CommandContext, abs_requests_reason: str, abs_requests_depart_date: str, abs_requests_retour_date: str):
       embed = new_embed(title=f"Absence", description=f"**Une nouvelle absence a été signalée par {ctx.author.mention}**", fields=[["Raison", abs_requests_reason, False], ["Statut", "`En attente`", False], ["Gérant", "Non accepté", False], ["Dates", f"{abs_requests_depart_date} - {abs_requests_retour_date}", False]])
-      channel = await interactions.get(self.client, interactions.Channel, object_id=ABSENCECHANNEL)
+      channel = await interactions.get(self.client, interactions.Channel, object_id=SalonAbsence)
       await ctx.send("Votre absence a bien été reçue. Votre gérant vous recontactera d'ici peu pour donner suite ou non à votre présence réduite.", ephemeral=True)
       message = await channel.send(content="<@!795745320629567489>", embeds=embed, components=buttonsABS)
       await addData(collection="absences", document={"_id": int(message.id), 'member': int(ctx.member.user.id), 'types': 'Absence'})
@@ -112,7 +112,7 @@ class absenceManager(interactions.Extension):
     @interactions.extension_modal('pr_modal')
     async def prmodalcb(self, ctx: interactions.CommandContext, pr_modal_reason: str, pr_modal_depart: str, pr_modal_retour: str):
       embed = new_embed(title=f"Présence réduite", description=f"**Une nouvelle présence réduite a été signalée par {ctx.author.mention}**", fields=[["Raison", pr_modal_reason, False], ["Statut", "`En attente`", False], ["Gérant", "Non accepté", False], ["Dates", f"{pr_modal_depart} - {pr_modal_retour}", False]])
-      channel = await interactions.get(self.client, interactions.Channel, object_id=ABSENCECHANNEL)
+      channel = await interactions.get(self.client, interactions.Channel, object_id=SalonAbsence)
       await ctx.send("Votre présence réduite a bien été reçue. Votre gérant vous recontactera d'ici peu pour donner suite ou non à votre présence réduite.", ephemeral=True)
       message = await channel.send(content="<@!795745320629567489>", embeds=embed, components=buttonsABS)
       await message.edit(content="")
