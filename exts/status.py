@@ -13,7 +13,7 @@ class Extension(interactions.Extension):
         description="Obtenir le statut du bot",
     )
     async def stats(self, ctx:interactions.CommandContext):
-        print(psutil.disk_usage("C:/Users/thiba/Bureau/BotS43/rewrite_bot"))
+        print(psutil.disk_usage("/"))
         print(platform.system)
         owner: interactions.User = interactions.get(self.client, interactions.User, object_id=self.client.me.team.owner_user_id)
         embed = utils.embeds.new_embed(
