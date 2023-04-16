@@ -1,7 +1,6 @@
 import interactions
 
 from utils.embeds import new_embed, new_notify_embed
-from utils.logs import new_log
 
 class Help(interactions.Extension):
     @interactions.extension_command(name="help", description="Montre toutes les commandes du bot")

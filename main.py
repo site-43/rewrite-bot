@@ -21,6 +21,7 @@ client = interactions.Client(
     | interactions.Intents.GUILD_MESSAGE_CONTENT
     | interactions.Intents.GUILD_MEMBERS,
     disable_sync=False,
+    default_scope=[ 1023676017493147648] #675379685869486080,
     #logging=True,
 )
 # app = Flask(__name__)
@@ -28,7 +29,13 @@ client = interactions.Client(
 # config.bind = ["0.0.0.0:80"]
 
 molter.setup(client, default_prefix=["s!","<"])
-[client.load(f"exts.{EXT}") for EXT in EXTENSIONS]
+# [client.load(f"exts.{EXT}") for EXT in EXTENSIONS]
+for ext in EXTENSIONS:
+    try:
+        client.load(f"exts.{ext}")
+        print(f"Loaded {ext}")
+    except:
+        print(f"Failed to load extension {ext}")
 
 
 # @app.route('/')

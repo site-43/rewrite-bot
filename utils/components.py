@@ -1,5 +1,4 @@
 import interactions
-from utils.logs import new_log
 from utils.embeds import create_error_embed
 def add_button(
     style:interactions.ButtonStyle = interactions.ButtonStyle.PRIMARY,
@@ -25,5 +24,22 @@ modals = {
             custom_id="affiliatedMsg",
             required=True
             )
+    ]),
+    "SayMessage": interactions.Modal(custom_id="say_msg", title="Envoyer un message", components=[
+        interactions.TextInput(
+            style=interactions.TextStyleType.SHORT,
+            label="SalonID (si nécessaire)",
+            required=False,
+            placeholder="L'identifiant du salon dans lequel envoyer le message (Optionnel)",
+            custom_id="say_channel"
+        ),
+        interactions.TextInput(
+            style=interactions.TextStyleType.PARAGRAPH,
+            label='Message à envoyer',
+            required=True,
+            placeholder="Le message que vous voulez envoyer.",
+            max_length=2048,
+            custom_id="say_text"
+        )
     ])
 }

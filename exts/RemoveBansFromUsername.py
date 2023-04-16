@@ -3,7 +3,6 @@ import asyncio
 from configs import LOGSTAFF
 from interactions.ext import molter
 from utils.embeds import new_notify_embed, create_error_embed, new_embed
-from utils.logs import new_log
 from colorama import Fore
 
 class Extension(molter.MolterExtension):
@@ -12,7 +11,7 @@ class Extension(molter.MolterExtension):
 
     @molter.prefixed_command(name="unban")
     async def removebans(self, ctx: molter.MolterContext, *, name: str):
-        await new_log(self.client, channel=LOGSTAFF, embeds=[new_embed(title="Unban", description=f"{ctx.author.mention} a lancé la commande unban.")])
+        #await new_log(self.client, channel=LOGSTAFF, embeds=[new_embed(title="Unban", description=f"{ctx.author.mention} a lancé la commande unban.")])
         if ctx.guild_id == None:
             await ctx.send(embeds=[
                 create_error_embed("Cette commande n'est pas utilisable en Messages Privés.")
@@ -53,7 +52,7 @@ class Extension(molter.MolterExtension):
             await ctx.send(embeds=[
                 new_notify_embed(f"Tout s'est bien déroulé, j'ai pu unban {len(found)} personnes comportant les caractères `{name}` à la suite dans leur pseudonyme.")
             ])
-            await new_log(self.client, channel=LOGSTAFF, embeds=[new_embed(title="Unban", description=f"{ctx.author.mention} a unbanni {len(found)} utilisateurs comportant la suite de caractère {name}.")])
+            #await new_log(self.client, channel=LOGSTAFF, embeds=[new_embed(title="Unban", description=f"{ctx.author.mention} a unbanni {len(found)} utilisateurs comportant la suite de caractère {name}.")])
         else:
             await ctx.send(embeds=[
                 create_error_embed("Je n'ai pas réussi a unban tous les comptes. Veuillez vous référer à la console pour obtenir les identifiants non bannis.")
