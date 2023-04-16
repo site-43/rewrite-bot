@@ -15,7 +15,7 @@ class Extension(interactions.Extension):
     async def stats(self, ctx:interactions.CommandContext):
         print(psutil.disk_usage("/"))
         print(platform.system)
-        owner: interactions.User = interactions.get(self.client, interactions.User, object_id=self.client.me.team.owner_user_id)
+        owner: interactions.User = await interactions.get(self.client, interactions.User, object_id=self.client.me.team.owner_user_id)
         embed = utils.embeds.new_embed(
             title="Statut du bot",
             color=0xfcc38d,
