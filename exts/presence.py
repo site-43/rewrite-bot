@@ -61,9 +61,9 @@ class absenceManager(interactions.Extension):
         name = data["types"]
         member = await interactions.get(self.client, interactions.Member, object_id=data["member"], parent_id=ctx.guild_id)
         if data["types"] == "Absence":
-          await member.add_role(1042146870446800956)
+          await member.add_role(758365326961803385)
         else:
-          await member.add_role(1041788969798602754)
+          await member.add_role(912700941722091530)
         
         embed:interactions.Embed = ctx.message.embeds[0]
         embed.color = 0x00ff08
