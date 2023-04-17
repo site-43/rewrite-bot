@@ -1,5 +1,6 @@
 import interactions
-from utils.embeds import create_error_embed, new_notify_embed
+from asyncio import sleep
+from utils.embeds import create_error_embed, new_notify_embed, new_embed
 from utils.components import add_button
 from configs import VERSION, LogsChannel
 class Extension(interactions.Extension):
@@ -11,6 +12,21 @@ class Extension(interactions.Extension):
         print(error)
         channel = await interactions.get(self.client, interactions.Channel, object_id=LogsChannel)
         await channel.send(embeds=[create_error_embed(f"**COM[{ctx.command.name}]_ERR:**\n```{error}```")])
+
+
+
+    @interactions.extension_component("satu_close_thread")
+    async def satu_close_thread(self, ctx: interactions.ComponentContext):
+        owner = await interactions.get(self.client, interactions.User, object_id=self.client.me.team.owner_user_id)
+        if ctx.author.id == owner.id:
+            print(ctx)
+            print(ctx.channel_id)
+            await ctx.send(embeds=[new_notify_embed("Suppression dans 5 secondes.")],ephemeral=True)
+            await sleep(5)
+            await ctx.channel.delete()
+        else:
+            await ctx.send(ephemeral=True, embeds=[create_error_embed("Vous n'avez pas la permission suffisante.")])
+
 
     @interactions.extension_listener(name="on_start")
     async def on_start(self):
@@ -26,6 +42,13 @@ class Extension(interactions.Extension):
         await self.client.change_presence(presence=presence)
         print("[INFO] Bot start.")
     
+    @interactions.extension_listener(name="on_message_create")
+    async def on_message_create(self, message:interactions.Message):
+        if not message.channel_id == 1096863271987982458:
+            return
+        thread = await message.create_thread(name="Avis", reason="Ouverture d'un thread pour récolter les avis.")
+        await thread.send(embeds=[new_embed(title="Bienvenue dans ce thread", description="Ce thread a été automatiquement généré pour discuter des propositions de la V2.", footer_text="N'hésitez pas à réagir a la proposition ! ;)")], components=[interactions.Button(label="Fermer", style=interactions.ButtonStyle.DANGER, custom_id="satu_close_thread")])
+
     # @interactions.extension_listener(name="on_thread_create")
     # async def on_thread_create(self, Thread: interactions.Thread):
     #     if not Thread.parent_id or int(Thread.parent_id) != BugThread:
