@@ -37,7 +37,7 @@ class absenceManager(interactions.Extension):
           if embed:
             embed.color = 0x00114f
             embed.fields[1].value = "`Terminée`"
-          channel = await interactions.get(self.client, interactions.Channel, object_id=1089489011791384736)
+          channel = await interactions.get(self.client, interactions.Channel, object_id=LogsAbsence)
           await channel.send(embeds=embed)
           await message.delete()
           await validmessage.delete()

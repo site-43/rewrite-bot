@@ -13,6 +13,7 @@ class Extension(interactions.Extension):
         description="Obtenir le statut du bot",
     )
     async def stats(self, ctx:interactions.CommandContext):
+        print("Good")
         owner: interactions.User = await interactions.get(self.client, interactions.User, object_id=self.client.me.team.owner_user_id)
         embed = utils.embeds.new_embed(
             title="Statut du bot",
