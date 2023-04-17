@@ -39,9 +39,9 @@ class absenceManager(interactions.Extension):
             embed.fields[1].value = "`Terminée`"
           member = await interactions.get(self.client, interactions.Member, object_id=data["member"], parent_id=ctx.guild_id)
           if data["types"] == "Absence":
-            member.remove_role(758365326961803385)
+            await member.remove_role(758365326961803385)
           else:
-            member.remove_role(912700941722091530)
+            await member.remove_role(912700941722091530)
             
           channel = await interactions.get(self.client, interactions.Channel, object_id=LogsAbsence)
           await channel.send(embeds=embed)
