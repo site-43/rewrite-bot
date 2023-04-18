@@ -15,6 +15,7 @@ class Extension(interactions.Extension):
 
 
 
+
     @interactions.extension_component("satu_close_thread")
     async def satu_close_thread(self, ctx: interactions.ComponentContext):
         owner = await interactions.get(self.client, interactions.User, object_id=self.client.me.team.owner_user_id)
