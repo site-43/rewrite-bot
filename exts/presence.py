@@ -113,7 +113,7 @@ class absenceManager(interactions.Extension):
       embed = new_embed(title=f"Absence", description=f"**Une nouvelle absence a été signalée par {ctx.author.mention}**", fields=[["Raison", abs_requests_reason, False], ["Statut", "`En attente`", False], ["Gérant", "Non accepté", False], ["Dates", f"{abs_requests_depart_date} - {abs_requests_retour_date}", False]])
       channel = await interactions.get(self.client, interactions.Channel, object_id=SalonAbsence)
       await ctx.send("Votre absence a bien été reçue. Votre gérant vous recontactera d'ici peu pour donner suite ou non à votre présence réduite.", ephemeral=True)
-      message = await channel.send(content="<@!795745320629567489>", embeds=embed, components=buttonsABS)
+      message = await channel.send(embeds=embed, components=buttonsABS)
       await addData(collection="absences", document={"_id": int(message.id), 'member': int(ctx.member.user.id), 'types': 'Absence'})
       pings = []
       for role in ctx.author.roles:
@@ -133,7 +133,7 @@ class absenceManager(interactions.Extension):
       embed = new_embed(title=f"Présence réduite", description=f"**Une nouvelle présence réduite a été signalée par {ctx.author.mention}**", fields=[["Raison", pr_modal_reason, False], ["Statut", "`En attente`", False], ["Gérant", "Non accepté", False], ["Dates", f"{pr_modal_depart} - {pr_modal_retour}", False]])
       channel = await interactions.get(self.client, interactions.Channel, object_id=SalonAbsence)
       await ctx.send("Votre présence réduite a bien été reçue. Votre gérant vous recontactera d'ici peu pour donner suite ou non à votre présence réduite.", ephemeral=True)
-      message = await channel.send(content="<@!795745320629567489>", embeds=embed, components=buttonsABS)
+      message = await channel.send(embeds=embed, components=buttonsABS)
       await message.edit(content="", components=message.components)
       await addData(collection="absences", document={"_id": int(message.id), 'member': int(ctx.member.user.id), 'types': 'Présence réduite'})
       pings = []
