@@ -4,10 +4,7 @@ from utils.embeds import new_embed, create_error_embed
 from utils.components import add_button
 from utils.modals import absmodal, prmodal
 from utils.database import addData, getData
-import datetime
-from colorama import Fore
 import asyncio
-import pymongo
 buttonsABS = [
     add_button(style=interactions.ButtonStyle.SUCCESS, label="Accepter", emoji=interactions.Emoji(name="✅"), custom_id="accept"),
     add_button(style=interactions.ButtonStyle.DANGER, label="Refuser", emoji=interactions.Emoji(name="❌"), custom_id="refuse")
@@ -16,6 +13,13 @@ buttonsPR = [
     add_button(style=interactions.ButtonStyle.SUCCESS, label="Accepter", emoji=interactions.Emoji(name="✅"), custom_id="accept"),
     add_button(style=interactions.ButtonStyle.DANGER, label="Refuser", emoji=interactions.Emoji(name="❌"), custom_id="refuse")
 ]
+
+gerantperroles = {
+  781190476686032926 : [797784135145619456, 781190719154946068], #Rôle dev
+  744252614732021780 : [965212542966304818, 781188326991724605], #Rôle Mod
+  781190103699423272 : [790534072627757056 ,781190172347203585], #Rôle Anim
+  828540193513406474 : [965212346949726298, 876147169420259399], #Rôle Créa
+}
 
 class absenceManager(interactions.Extension):
     def __init__(self, client):
@@ -111,18 +115,38 @@ class absenceManager(interactions.Extension):
       await ctx.send("Votre absence a bien été reçue. Votre gérant vous recontactera d'ici peu pour donner suite ou non à votre présence réduite.", ephemeral=True)
       message = await channel.send(content="<@!795745320629567489>", embeds=embed, components=buttonsABS)
       await addData(collection="absences", document={"_id": int(message.id), 'member': int(ctx.member.user.id), 'types': 'Absence'})
+      pings = []
+      for role in ctx.author.roles:
+        if role in gerantperroles:
+          for grole in gerantperroles[role]:
+            pings.append(grole)
+      if len(pings) >= 0:
+        for ping in pings:
+          pingmsg = await channel.send(content=f"<@&{ping}>")
+          await asyncio.sleep(2)
+          await pingmsg.delete()
 
 
 ########################################################################
-
     @interactions.extension_modal('pr_modal')
     async def prmodalcb(self, ctx: interactions.CommandContext, pr_modal_reason: str, pr_modal_depart: str, pr_modal_retour: str):
       embed = new_embed(title=f"Présence réduite", description=f"**Une nouvelle présence réduite a été signalée par {ctx.author.mention}**", fields=[["Raison", pr_modal_reason, False], ["Statut", "`En attente`", False], ["Gérant", "Non accepté", False], ["Dates", f"{pr_modal_depart} - {pr_modal_retour}", False]])
       channel = await interactions.get(self.client, interactions.Channel, object_id=SalonAbsence)
       await ctx.send("Votre présence réduite a bien été reçue. Votre gérant vous recontactera d'ici peu pour donner suite ou non à votre présence réduite.", ephemeral=True)
       message = await channel.send(content="<@!795745320629567489>", embeds=embed, components=buttonsABS)
-      await message.edit(content="")
+      await message.edit(content="", components=message.components)
       await addData(collection="absences", document={"_id": int(message.id), 'member': int(ctx.member.user.id), 'types': 'Présence réduite'})
+      pings = []
+      for role in ctx.author.roles:
+        if role in gerantperroles:
+          for grole in gerantperroles[role]:
+            pings.append(grole)
+      if len(pings) >= 0:
+        for ping in pings:
+          pingmsg = await channel.send(content=f"<@&{ping}>")
+          await asyncio.sleep(2)
+          await pingmsg.delete()
+            
 
 def setup(client):
   print('Loading AbsenceManager')
