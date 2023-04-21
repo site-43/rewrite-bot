@@ -1,14 +1,6 @@
 import interactions
-from interactions.ext import molter
-from flask import Flask
-from hypercorn.config import Config
-from hypercorn.asyncio import serve
-from asgiref.wsgi import WsgiToAsgi
-import asyncio
-from colorama import Fore, Style
-import logging
-import datetime
-import time
+from interactions.ext.fastapi import setup
+from colorama import Fore
 import os
 from dotenv import load_dotenv
 
@@ -25,12 +17,7 @@ client = interactions.Client(
     default_scope=[ 675379685869486080, 1023676017493147648] #675379685869486080,
     #logging=True,
 )
-# app = Flask(__name__)
-# config = Config()
-# config.bind = ["0.0.0.0:80"]
-
-# molter.setup(client, default_prefix=["s!","<"])
-# [client.load(f"exts.{EXT}") for EXT in EXTENSIONS]
+api = setup(client, host="0.0.0.0",  port=8080)
 for ext in EXTENSIONS:
     try:
         client.load(f"exts.{ext}")
@@ -40,15 +27,12 @@ for ext in EXTENSIONS:
         print(f"{Fore.RED}[ERROR]{Fore.RESET} {Fore.LIGHTYELLOW_EX}Failed{Fore.RESET} to load extension {ext}")
 
 
-# @app.route('/')
-# async def home():
-#      return 'Running !'
-# loop = asyncio.get_event_loop()
+@api.route("GET", "/")
+async def index():
+    return {"message": "success", "statut": "Alive"}
 
-# task1 = loop.create_task((serve(WsgiToAsgi(app), config)))
-# task2 = loop.create_task(client._ready())
+# @api.route("GET", "/services")
+# async def services(optional: str = None):
+#     return {"passed": optional if optional else "None."}
 
-# gathered = asyncio.gather(task1,task2)
-# loop.run_until_complete(gathered)
-print("Je viens d'être démarré !")
 client.start()
