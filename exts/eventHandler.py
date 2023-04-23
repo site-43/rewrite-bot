@@ -24,6 +24,7 @@ class Extension(interactions.Extension):
             print(ctx.channel_id)
             await ctx.send(embeds=[new_notify_embed("Suppression dans 5 secondes.")],ephemeral=True)
             await sleep(5)
+            channel = interactions.Channel(**await self.client._http.get_channel(ctx.channel_id), _client=self.client._http)
             await ctx.channel.delete()
         else:
             await ctx.send(ephemeral=True, embeds=[create_error_embed("Vous n'avez pas la permission suffisante.")])
