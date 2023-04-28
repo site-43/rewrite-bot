@@ -1,0 +1,69 @@
+2023-04-29 00:46:04.617  INFO 1572 --- [main] lavalink.server.Launcher                 : Starting Launcher using Java 20.0.1 on IFP229135199 with PID 1572 (C:\Users\thibaultmorez\Desktop\rewrite-bot\lavalink\Lavalink.jar started by thibaultmorez in C:\Users\thibaultmorez\Desktop\rewrite-bot\lavalink)
+2023-04-29 00:46:04.645  INFO 1572 --- [main] lavalink.server.Launcher                 : No active profile set, falling back to 1 default profile: "default"
+2023-04-29 00:46:07.378  INFO 1572 --- [main] lavalink.server.Launcher                 : Started Launcher in 4.439 seconds (JVM running for 6.433)
+2023-04-29 00:46:07.402  INFO 1572 --- [main] lavalink.server.Launcher                 : You can safely ignore the big red warning about illegal reflection. See https://github.com/freyacodes/Lavalink/issues/295
+2023-04-29 00:46:07.559  INFO 1572 --- [main] lavalink.server.Launcher                 : 
+
+[32m       .  [31m _                  _ _       _    [32m__ _ _
+[32m      /\\ [31m| | __ ___   ____ _| (_)_ __ | | __[32m\ \ \ \
+[32m     ( ( )[31m| |/ _` \ \ / / _` | | | '_ \| |/ /[32m \ \ \ \
+[32m      \\/ [31m| | (_| |\ V / (_| | | | | | |   < [32m  ) ) ) )
+[32m       '  [31m|_|\__,_| \_/ \__,_|_|_|_| |_|_|\_\[32m / / / /
+[0m    =========================================[32m/_/_/_/[0m
+
+	Version:        3.7.5
+	Build time:     06.03.2023 12:02:05 UTC
+	Branch          HEAD
+	Commit:         c00286d
+	Commit time:    06.03.2023 11:59:46 UTC
+	JVM:            20.0.1
+	Lavaplayer      1.4.0-original
+
+2023-04-29 00:46:07.600  INFO 1572 --- [main] lavalink.server.Launcher                 : No active profile set, falling back to 1 default profile: "default"
+2023-04-29 00:46:10.347  WARN 1572 --- [main] io.undertow.websockets.jsr               : UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
+2023-04-29 00:46:10.453  INFO 1572 --- [main] io.undertow.servlet                      : Initializing Spring embedded WebApplicationContext
+2023-04-29 00:46:10.455  INFO 1572 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2829 ms
+2023-04-29 00:46:10.769  WARN 1572 --- [main] l.server.config.SentryConfiguration      : Turning off sentry
+2023-04-29 00:46:11.336  INFO 1572 --- [main] c.s.d.l.tools.GarbageCollectionMonitor   : GC monitoring enabled, reporting results every 2 minutes.
+2023-04-29 00:46:12.851  INFO 1572 --- [main] lavalink.server.config.KoeConfiguration  : OS: WINDOWS, Arch: X86_64
+2023-04-29 00:46:12.851  INFO 1572 --- [main] lavalink.server.config.KoeConfiguration  : Enabling JDA-NAS
+2023-04-29 00:46:12.864  INFO 1572 --- [main] c.s.l.c.natives.NativeLibraryLoader      : Native library udpqueue: loading with filter null
+2023-04-29 00:46:12.883  INFO 1572 --- [main] c.s.l.c.natives.NativeLibraryLoader      : Native library udpqueue: successfully loaded.
+2023-04-29 00:46:13.688  INFO 1572 --- [main] io.undertow                              : starting server: Undertow - 2.2.16.Final
+2023-04-29 00:46:13.711  INFO 1572 --- [main] org.xnio                                 : XNIO version 3.8.6.Final
+2023-04-29 00:46:13.757  INFO 1572 --- [main] org.xnio.nio                             : XNIO NIO Implementation Version 3.8.6.Final
+2023-04-29 00:46:14.084  INFO 1572 --- [main] org.jboss.threads                        : JBoss Threads version 3.1.0.Final
+2023-04-29 00:46:14.229  INFO 1572 --- [main] o.s.b.w.e.undertow.UndertowWebServer     : Undertow started on port(s) 2333 (http)
+2023-04-29 00:46:14.252  INFO 1572 --- [main] lavalink.server.Launcher                 : Started Launcher in 6.832 seconds (JVM running for 13.297)
+2023-04-29 00:46:14.262  INFO 1572 --- [main] lavalink.server.Launcher                 : Lavalink is ready to accept connections.
+2023-04-29 00:53:57.485  INFO 1572 --- [XNIO-1 task-1] io.undertow.servlet                      : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-04-29 00:53:57.487  INFO 1572 --- [XNIO-1 task-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-04-29 00:53:57.492  INFO 1572 --- [XNIO-1 task-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 3 ms
+2023-04-29 00:53:57.556  INFO 1572 --- [XNIO-1 task-1] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:50110
+2023-04-29 00:53:57.618  INFO 1572 --- [XNIO-1 task-1] lavalink.server.io.RequestLoggingFilter  : GET /, client=127.0.0.1
+2023-04-29 00:53:58.339  INFO 1572 --- [XNIO-1 task-1] lavalink.server.io.SocketServer          : Connection successfully established from Lavalink.py
+2023-04-29 00:56:46.317  INFO 1572 --- [XNIO-1 I/O-3] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:50110 -- CloseStatus[code=1006, reason=]
+2023-04-29 00:56:46.317  INFO 1572 --- [XNIO-1 I/O-3] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2023-04-29 00:56:56.281  INFO 1572 --- [XNIO-1 task-1] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:50148
+2023-04-29 00:56:56.287  INFO 1572 --- [XNIO-1 task-1] lavalink.server.io.RequestLoggingFilter  : GET /, client=127.0.0.1
+2023-04-29 00:56:56.296  INFO 1572 --- [XNIO-1 task-1] lavalink.server.io.SocketServer          : Connection successfully established from Lavalink.py
+2023-04-29 00:57:18.429  INFO 1572 --- [XNIO-1 I/O-3] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:50148 -- CloseStatus[code=1006, reason=]
+2023-04-29 00:57:18.430  INFO 1572 --- [XNIO-1 I/O-3] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2023-04-29 00:57:27.573  INFO 1572 --- [XNIO-1 task-1] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:50166
+2023-04-29 00:57:27.578  INFO 1572 --- [XNIO-1 task-1] lavalink.server.io.RequestLoggingFilter  : GET /, client=127.0.0.1
+2023-04-29 00:57:27.582  INFO 1572 --- [XNIO-1 task-1] lavalink.server.io.SocketServer          : Connection successfully established from Lavalink.py
+2023-04-29 00:58:40.332  INFO 1572 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:50166 -- CloseStatus[code=1006, reason=]
+2023-04-29 00:58:40.332  INFO 1572 --- [XNIO-1 I/O-4] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2023-04-29 00:58:49.930  INFO 1572 --- [XNIO-1 task-1] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:50191
+2023-04-29 00:58:49.938  INFO 1572 --- [XNIO-1 task-1] lavalink.server.io.RequestLoggingFilter  : GET /, client=127.0.0.1
+2023-04-29 00:58:49.949  INFO 1572 --- [XNIO-1 task-1] lavalink.server.io.SocketServer          : Connection successfully established from Lavalink.py
+2023-04-29 00:59:27.203  INFO 1572 --- [XNIO-1 task-1] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch: This is your last warning"
+2023-04-29 00:59:27.362  INFO 1572 --- [XNIO-1 I/O-3] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "1023676017493147648", "sessionId": "7fed587c5d406d5fe67d8f1c7260fb3a", "event": {"token": "c073e0a7683ab25c", "guild_id": "1023676017493147648", "endpoint": "madrid5042.discord.media:443"}}
+2023-04-29 00:59:27.410  WARN 1572 --- [XNIO-1 I/O-3] lavalink.server.io.WebSocketHandler      : Sending websocket commands to Lavalink has been deprecated and will be removed in API version 4. API version 3 will be removed in Lavalink 5. Please use the new REST endpoints instead.
+2023-04-29 00:59:27.870  INFO 1572 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: This is your last warning
+2023-04-29 00:59:28.084  INFO 1572 --- [XNIO-1 task-1] lavalink.server.io.RequestLoggingFilter  : GET /loadtracks?identifier=ytsearch:+This+is+your+last+warning, client=127.0.0.1
+2023-04-29 00:59:28.097  INFO 1572 --- [XNIO-1 I/O-3] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "1023676017493147648", "track": "QAAAhQIAJ1MuQy5QIHwgVGhpcyBJcyBZb3VyIExhc3QgV2FybmluZyBSZW1peAAEczFyawAAAAAAAhsQAAtlcEtyMEZjbHVfRQABACtodHRwczovL3d3dy55b3V0dWJlLmNvbS93YXRjaD92PWVwS3IwRmNsdV9FAAd5b3V0dWJlAAAAAAAAAAA=", "startTime": 0, "noReplace": false, "pause": false}
+2023-04-29 00:59:28.160  WARN 1572 --- [lava-daemon-pool-playback-1-thread-1] c.s.d.l.s.y.YoutubeAccessTokenTracker    : YouTube auth tokens can't be retrieved because email and password is not set in YoutubeAudioSourceManager, age restricted videos will throw exceptions.
+2023-04-29 00:59:28.597  INFO 1572 --- [lava-daemon-pool-playback-1-thread-1] c.s.d.l.s.y.YoutubeAccessTokenTracker    : Updating YouTube visitor id (current is null).
+2023-04-29 00:59:28.660  INFO 1572 --- [lava-daemon-pool-playback-1-thread-1] c.s.d.l.s.y.YoutubeAccessTokenTracker    : Updating YouTube visitor id succeeded, new one is CgtNbmtVbmkxOEZldyjRn7GiBg%3D%3D, next update will be after 600 seconds.
+2023-04-29 01:01:46.073  INFO 1572 --- [XNIO-1 I/O-3] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "1023676017493147648"}
