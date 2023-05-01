@@ -41,5 +41,19 @@ modals = {
             max_length=2048,
             custom_id="say_text"
         )
+    ]),
+    "Recrutements Testeur Pré-Refonte": interactions.Modal(custom_id="recrutement_testers", title="Devenir testeur", components=[
+        interactions.TextInput(
+            style=interactions.TextStyleType.SHORT,
+            label="Pseudonyme Roblox",
+            required="True",
+            custom_id="rec_test_pseudo_rbx"
+            ),
+        interactions.TextInput(
+            style=interactions.TextStyleType.PARAGRAPH,
+            label="Vos motivations",
+            required="True",
+            custom_id="rec_test_motiv"
+        )
     ])
 }

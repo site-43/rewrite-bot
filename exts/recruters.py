@@ -31,7 +31,5 @@ class Extension(interactions.Extension):
             )
         ], reason="Recrutements dev.", parent_id=1097920035781091328)
         await ctx.send(f"Le salon pour {member.mention} a été créé ({channel.mention})")
-
-
 def setup(client: interactions.Client):
     Extension(client)
