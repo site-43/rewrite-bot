@@ -2,6 +2,7 @@ import interactions
 import platform
 #import psutil
 import utils.embeds
+import math
 import time
 start_time = time.time()
 class Extension(interactions.Extension):
