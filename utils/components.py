@@ -46,14 +46,34 @@ modals = {
         interactions.TextInput(
             style=interactions.TextStyleType.SHORT,
             label="Pseudonyme Roblox",
-            required="True",
+            required=True,
             custom_id="rec_test_pseudo_rbx"
             ),
         interactions.TextInput(
             style=interactions.TextStyleType.PARAGRAPH,
             label="Vos motivations",
-            required="True",
+            required=True,
             custom_id="rec_test_motiv"
+        )
+    ]),
+    "Proposition Admin": interactions.Modal(custom_id="admin_propose", title="Proposer un sujet", components=[
+        interactions.TextInput(
+            style=interactions.TextStyleType.SHORT,
+            label="Nom du sujet",
+            required=True,
+            custom_id="propositionName",
+            max_length=100,
+            min_length=2,
+            placeholder="Le nom du sujet que vous voulez proposer.",
+        ),
+        interactions.TextInput(
+            style=interactions.TextStyleType.PARAGRAPH,
+            label="Description du sujet",
+            required=True,
+            custom_id="propositionDescription",
+            max_length=2048,
+            min_length=5,
+            placeholder="La description du sujet que vous voulez proposer.",
         )
     ])
 }
