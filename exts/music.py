@@ -9,12 +9,14 @@ class Music(Extension):
     def __init__(self, client):
         self.client = client
         self.lavalink: Lavalink = None
+        
 
     @extension_listener()
     async def on_start(self):
         # Initialize lavalink instance
         self.lavalink: Lavalink = Lavalink(self.client)
 
+        self.task.start(self)
         # Connect to lavalink server
         self.lavalink.add_node("192.168.0.34", 2333, "Saturna19", "eu", resume_timeout=10, reconnect_attempts=1)
 
