@@ -21,6 +21,7 @@ class Music(Extension):
     @create_task(IntervalTrigger(60))
     async def task(self):
         if len(self.lavalink.client.node_manager.available_nodes) == 0:
+            print("Trying to connect to lavalink")
             self.lavalink.add_node("192.168.0.34", 2333, "Saturna19", "eu", resume_timeout=10, reconnect_attempts=1)
         
 
@@ -29,7 +30,7 @@ class Music(Extension):
     async def play(self, ctx: CommandContext, query: str):
         await ctx.defer()
 
-        if self.lavalink.CurrentNodes == 0 :
+        if len(self.lavalink.client.node_manager.available_nodes) == 0:
             return await ctx.send(embeds=[new_notify_embed("Le module de musique n'est pas disponible pour le moment.\n```\nNodes Available: 0/0\nSelfhost = Disabled\nCanPlay = False```")])
         # Getting user's voice state
         voice_state: VoiceState = ctx.author.voice_state
