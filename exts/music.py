@@ -43,7 +43,7 @@ class Music(Extension):
         await player.play()
         await ctx.send(f"Now playing: `{track.title}`")
 
-    @extension_command()
+    @extension_command(scope=[655335475057393679])
     async def leave(self, ctx: CommandContext):
         # Disconnect from voice channel and remove player
         await self.lavalink.disconnect(ctx.guild_id)
