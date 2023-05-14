@@ -1,4 +1,5 @@
 import interactions
+from interactions.ext.lavalink import Lavalink
 import platform
 #import psutil
 import utils.embeds
@@ -29,7 +30,6 @@ class Extension(interactions.Extension):
                 ["🛠️ Développeur", f"{owner.mention}", True],
                 ["📊 Commandes", len(self.client._commands), True],
                 ["🏓 Latence", f"{self.client.latency:.2f} ms", True],
-                #["📝 Mémoire", f"{psutil.cpu_percent()}", True],
             ]
         )
         await ctx.send(embeds=[embed])
