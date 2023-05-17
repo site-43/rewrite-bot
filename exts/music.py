@@ -42,7 +42,7 @@ class Music(Extension):
         # Connecting to voice channel and getting player instance
         player = await self.lavalink.connect(voice_state.guild_id, voice_state.channel_id)
         if player.is_connected == True:
-            await ctx.send(embeds=[new_embed("Connextion", f"Je suis bien connecté au salon <#{player.channel_id}>")])
+            await ctx.send(embeds=[new_embed("Connection", f"Je suis bien connecté au salon <#{player.channel_id}>")])
 
         # Getting tracks from youtube
         tracks = await player.search_youtube(query)
@@ -113,7 +113,8 @@ class Music(Extension):
         """Passer la musique en cours"""
         player = self.lavalink.get_player(ctx.guild_id)
         if player and player.is_playing:
-            player.skip()
+            await player.skip()
+            await ctx.send("OK!", ephemeral=True)
 
 def setup(client):
     Music(client)
