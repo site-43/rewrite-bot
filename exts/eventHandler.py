@@ -35,11 +35,11 @@ class Extension(interactions.Extension):
         presence = interactions.ClientPresence(
             activities=[
                 interactions.PresenceActivity(
-                    name=f"la version {VERSION}",
-                    type=interactions.PresenceActivityType.GAME
+                    name=f"ce n'est qu'un au-revoir...",
+                    type=interactions.PresenceActivityType.LISTENING,
                 )
             ],
-            status=interactions.StatusType.ONLINE,
+            status=interactions.StatusType.DND,
         )
         await self.client.change_presence(presence=presence)
         print("[INFO] Bot start.")
