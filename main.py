@@ -1,5 +1,6 @@
 import interactions
 from interactions.ext.fastapi import setup
+from interactions.ext import molter
 from colorama import Fore
 import os
 from dotenv import load_dotenv
@@ -18,6 +19,7 @@ client = interactions.Client(
     #logging=True,
 )
 api = setup(client, host="0.0.0.0",  port=8080)
+molter.setup(client, default_prefix="s!")
 for ext in EXTENSIONS:
     try:
         client.load(f"exts.{ext}")
